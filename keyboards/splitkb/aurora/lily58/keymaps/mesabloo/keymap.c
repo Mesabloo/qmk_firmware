@@ -26,42 +26,41 @@ typedef struct {
 // Function to determine the current tapdance state
 td_state_t cur_dance(tap_dance_state_t *state);
 
-// `finished` and `reset` functions for each tapdance keycode
-void ralt_finished(tap_dance_state_t *state, void *user_data);
-void ralt_reset(tap_dance_state_t *state, void *user_data);
-
 ////////////////////////////
 
 enum dance_keys { DANCE_RALT, DANCE_LGUI };
 
+#define BSPC_LOWR LT(LAYER_UNDEFINED, KC_BSPC)
+#define TAB_UPPR LT(LAYER_UNDEFINED, KC_TAB)
+
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [LAYER_ALPHA] = LAYOUT(
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,        XXXXXXX,                 /**/                 XXXXXXX, XXXXXXX,        XXXXXXX,        XXXXXXX, XXXXXXX,        XXXXXXX, 
-        KC_TAB,  FR_Q,    FR_W,    FR_F,    FR_P,           FR_G,                    /**/                 FR_J,    FR_L,           FR_U,           FR_Y,    LALT_T(KC_ESC), XXXXXXX,
-        XXXXXXX, FR_A,    FR_R,    FR_S,    FR_T,           FR_D,                    /**/                 FR_H,    FR_N,           FR_E,           FR_I,    FR_O,           FR_QUOT,
-        XXXXXXX, FR_Z,    FR_X,    FR_C,    FR_V,           FR_B,    XXXXXXX,        /**/ XXXXXXX,        FR_K,    FR_M,           FR_COMM,        FR_SCLN, KC_DOT,         KC_BSPC,
-                                   XXXXXXX, TD(DANCE_LGUI), TL_UPPR, LSFT_T(KC_SPC), /**/ LCTL_T(KC_ENT), TL_LOWR, TD(DANCE_RALT), XXXXXXX
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,        XXXXXXX,                  /**/                 XXXXXXX,   XXXXXXX,        XXXXXXX,        XXXXXXX, XXXXXXX,        XXXXXXX, 
+        XXXXXXX, FR_Q,    FR_W,    FR_F,    FR_P,           FR_G,                     /**/                 FR_J,      FR_L,           FR_U,           FR_Y,    LALT_T(KC_ESC), XXXXXXX,
+        XXXXXXX, FR_A,    FR_R,    FR_S,    FR_T,           FR_D,                     /**/                 FR_H,      FR_N,           FR_E,           FR_I,    FR_O,           FR_QUOT,
+        XXXXXXX, FR_Z,    FR_X,    FR_C,    FR_V,           FR_B,     XXXXXXX,        /**/ XXXXXXX,        FR_K,      FR_M,           FR_COMM,        FR_SCLN, KC_DOT,         XXXXXXX,
+                                   XXXXXXX, TD(DANCE_LGUI), TAB_UPPR, LSFT_T(KC_SPC), /**/ LCTL_T(KC_ENT), BSPC_LOWR, TD(DANCE_RALT), XXXXXXX
     ),
     [LAYER_NUM] = LAYOUT(
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          /**/          XXXXXXX, XXXXXXX,        XXXXXXX, XXXXXXX, XXXXXXX,        XXXXXXX, 
-        KC_TAB,  XXXXXXX, KC_P1,   KC_P2,   KC_P3,   XXXXXXX,          /**/          XXXXXXX, XXXXXXX,        XXXXXXX, XXXXXXX, LALT_T(KC_ESC), XXXXXXX,
+        XXXXXXX, XXXXXXX, KC_P1,   KC_P2,   KC_P3,   XXXXXXX,          /**/          XXXXXXX, XXXXXXX,        XXXXXXX, XXXXXXX, LALT_T(KC_ESC), XXXXXXX,
         XXXXXXX, XXXXXXX, KC_P4,   KC_P5,   KC_P6,   XXXXXXX,          /**/          XXXXXXX, KC_LEFT,        KC_DOWN, KC_UP,   KC_RIGHT,       XXXXXXX,
-        XXXXXXX, XXXXXXX, KC_P7,   KC_P8,   KC_P9,   KC_P0,   XXXXXXX, /**/ XXXXXXX, XXXXXXX, KC_HOME,        KC_PGDN, KC_PGUP, KC_END,         KC_BSPC,
+        XXXXXXX, XXXXXXX, KC_P7,   KC_P8,   KC_P9,   KC_P0,   XXXXXXX, /**/ XXXXXXX, XXXXXXX, KC_HOME,        KC_PGDN, KC_PGUP, KC_END,         XXXXXXX,
                                    XXXXXXX, KC_LGUI, _______, _______, /**/ _______, _______, TD(DANCE_RALT), XXXXXXX
     ),
     [LAYER_SYMB] = LAYOUT(
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,        XXXXXXX,                 /**/          XXXXXXX, XXXXXXX,        XXXXXXX,        XXXXXXX, XXXXXXX, XXXXXXX, 
-        KC_TAB,  FR_EXLM, FR_AT,   FR_HASH, FR_DLR,         FR_PERC,                 /**/          FR_CART, FR_AMPR,        FR_LPRN,        FR_RPRN, FR_ASTR, FR_TILD,
+        XXXXXXX, FR_EXLM, FR_AT,   FR_HASH, FR_DLR,         FR_PERC,                 /**/          FR_CART, FR_AMPR,        FR_LPRN,        FR_RPRN, FR_ASTR, FR_TILD,
         XXXXXXX, FR_LABK, FR_DIAE, FR_CIRC, OSL(LAYER_ACC), OSL(LAYER_GRV),          /**/          FR_MINS, FR_EQL,         FR_LBRC,        FR_RBRC, FR_BSLS, FR_GRV,
         XXXXXXX, XXXXXXX, XXXXXXX, FR_CCED, XXXXXXX,        FR_TILD,        XXXXXXX, /**/ XXXXXXX, FR_UNDS, FR_PLUS,        FR_LCBR,        FR_RCBR, FR_PIPE, KC_BSPC,
                                    XXXXXXX, KC_LGUI,        _______,        _______, /**/ _______, _______, TD(DANCE_RALT), XXXXXXX
     ),
     [LAYER_META] = LAYOUT(
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, 
-        QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX, XXXXXXX,          /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX, XXXXXXX, XXXXXXX, /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX,          /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX, XXXXXXX, /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                                    XXXXXXX, XXXXXXX, _______, XXXXXXX, /**/ XXXXXXX, _______, XXXXXXX, XXXXXXX
     ),
     [LAYER_FN] = LAYOUT(
@@ -102,6 +101,39 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 // clang-format on
 
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case BSPC_LOWR:
+            if (!record->tap.count) {
+                if (record->event.pressed) {
+                    // Started holding
+                    layer_on(TRI_LAYER_LOWER_LAYER);
+                } else {
+                    // Stopped holding
+                    layer_off(TRI_LAYER_LOWER_LAYER);
+                }
+                update_tri_layer(TRI_LAYER_LOWER_LAYER, TRI_LAYER_UPPER_LAYER, TRI_LAYER_ADJUST_LAYER);
+                return false;
+            }
+            return true;
+        case TAB_UPPR:
+            if (!record->tap.count) {
+                if (record->event.pressed) {
+                    // Started holding
+                    layer_on(TRI_LAYER_UPPER_LAYER);
+                } else {
+                    // Stopped holding
+                    layer_off(TRI_LAYER_UPPER_LAYER);
+                }
+                update_tri_layer(TRI_LAYER_LOWER_LAYER, TRI_LAYER_UPPER_LAYER, TRI_LAYER_ADJUST_LAYER);
+                return false;
+            }
+            return true;
+        default:
+            return true;
+    }
+}
+
 void keyboard_pre_init_user(void) {
   // Set our LED pin as output
   setPinOutput(24);
@@ -127,6 +159,8 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
         case LCTL_T(KC_ENT):
             return false;
         case LALT_T(KC_ESC):
+        case BSPC_LOWR:
+        case TAB_UPPR:
             return true;
         default:
             return false;
@@ -137,12 +171,17 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
 #if defined(TAPPING_TERM_PER_KEY)
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
+        case TD(DANCE_RALT):
+            return TAPPING_TERM - 50;
         // Set a long-ish tapping term for tap-dance keys
-        case QK_TAP_DANCE ... QK_TAP_DANCE_MAX:
-            return TAPPING_TERM;
+        // case QK_TAP_DANCE ... QK_TAP_DANCE_MAX:
+        //     return TAPPING_TERM;
         case LSFT_T(KC_SPC):
         case LCTL_T(KC_ENT):
-            return TAPPING_TERM + 100;
+            return TAPPING_TERM + 75;
+        case BSPC_LOWR:
+        case TAB_UPPR:
+            return TAPPING_TERM - 50;
         default:
             return TAPPING_TERM;
     }
@@ -445,7 +484,5 @@ void lgui_reset(tap_dance_state_t *state, void *user_data) {
 
 tap_dance_action_t tap_dance_actions[] = {
   [DANCE_RALT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, ralt_finished, ralt_reset),
-  // [DANCE_CAPS_LOCK] = ACTION_TAP_DANCE_DOUBLE(KC_LSFT, KC_CAPS),
-  // [DANCE_NUM_LOCK] = ACTION_TAP_DANCE_DOUBLE(KC_LSFT, KC_NUM),
   [DANCE_LGUI] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, lgui_finished, lgui_reset),
 };

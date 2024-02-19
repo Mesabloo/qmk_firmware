@@ -124,7 +124,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             return TAPPING_TERM;
         case LSFT_T(KC_SPC):
         case LCTL_T(KC_ENT):
-            return TAPPING_TERM + 100;
+            return TAPPING_TERM + 75;
         default:
             return TAPPING_TERM;
     }
@@ -229,6 +229,10 @@ static void render_flower(void) {
         oled_write_P(flower1, false);
         //render_space();
         //oled_write_P(" let ", false);
+    } else if (layer_state_is(LAYER_META)) {
+        oled_write_P(flower5, false);
+        //render_space();
+        //oled_write_P(" sys ", false);
     } else if (layer_state_is(LAYER_NUM)) {
         oled_write_P(flower2, false);
         //render_space();
@@ -241,10 +245,6 @@ static void render_flower(void) {
         oled_write_P(flower4, false);
         //render_space();
         //oled_write_P(" fun ", false);
-    } else if (layer_state_is(LAYER_META)) {
-        oled_write_P(flower5, false);
-        //render_space();
-        //oled_write_P(" sys ", false);
     } else {
         oled_write_P(flower7, false);
         //render_space();

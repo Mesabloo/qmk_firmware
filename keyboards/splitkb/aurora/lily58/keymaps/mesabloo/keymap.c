@@ -85,11 +85,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
     ),
     [LAYER_GAME] = LAYOUT(
-        XXXXXXX, FR_AMPR, FR_EACU, FR_DQUO,  FR_QUOT,        FR_LPRN,                     /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, 
-        KC_TAB,  FR_COMM, FR_A,    FR_Z,     FR_E,           FR_R,                        /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        KC_LSFT, XXXXXXX, FR_Q,    FR_S,     FR_D,           FR_F,                        /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        KC_LCTL, XXXXXXX, FR_X,    FR_C,     FR_G,           FR_B,               XXXXXXX, /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-                                   XXXXXXX,  TD(DANCE_LGUI), MO(LAYER_GAME_ALT), KC_SPC,  /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
+        XXXXXXX, FR_AMPR, FR_EACU, FR_DQUO,      FR_QUOT,        FR_LPRN,                    /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, 
+        KC_TAB,  FR_COMM, FR_A,    FR_Z,         FR_E,           FR_R,                       /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        KC_LSFT, XXXXXXX, FR_Q,    FR_S,         FR_D,           FR_F,                       /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        KC_LCTL, XXXXXXX, FR_X,    FR_C,         FR_G,           FR_B,               KC_ENT, /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+                                   MO(LAYER_FN), TD(DANCE_LGUI), MO(LAYER_GAME_ALT), KC_SPC, /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
     ),
     [LAYER_GAME_ALT] = LAYOUT(
         XXXXXXX, FR_MINS, FR_EGRV, FR_UNDS, FR_CCED, FR_AGRV,          /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
@@ -179,9 +179,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
         case LSFT_T(KC_SPC):
         case LCTL_T(KC_ENT):
             return TAPPING_TERM + 75;
-        case BSPC_LOWR:
-        case TAB_UPPR:
-            return TAPPING_TERM - 50;
         default:
             return TAPPING_TERM;
     }

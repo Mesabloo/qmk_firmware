@@ -155,17 +155,16 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
 #endif
 
 #if defined(TAPPING_TERM_PER_KEY)
-// Set a long-ish tapping term for tap-dance keys
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case QK_TAP_DANCE ... QK_TAP_DANCE_MAX:
-            return TAPPING_TERM;
+        case TD(DANCE_RALT):
+            return TAPPING_TERM - 50;
+        // Set a long-ish tapping term for tap-dance keys
+        // case QK_TAP_DANCE ... QK_TAP_DANCE_MAX:
+        //     return TAPPING_TERM;
         case LSFT_T(KC_SPC):
         case LCTL_T(KC_ENT):
             return TAPPING_TERM + 75;
-        case BSPC_LOWR:
-        case TAB_UPPR:
-            return TAPPING_TERM - 50;        
         default:
             return TAPPING_TERM;
     }

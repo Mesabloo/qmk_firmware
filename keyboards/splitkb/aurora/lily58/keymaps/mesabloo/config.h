@@ -1,7 +1,9 @@
 #pragma once
 
 #define PERMISSIVE_HOLD_PER_KEY
+#define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 #define TAPPING_TERM_PER_KEY
+#define RETRO_TAPPING_PER_KEY
 
 #if defined(OLED_ENABLE)
 #    if defined(OLED_FONT_H)

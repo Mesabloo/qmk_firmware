@@ -5,30 +5,9 @@
 #define FR_CART ALGR(FR_CCED)
 ////////////////////////////
 
-// Define a type containing as many tapdance states as you need
-typedef enum {
-    TD_NONE,
-    TD_UNKNOWN,
-    TD_SINGLE_TAP,
-    TD_SINGLE_HOLD,
-    TD_DOUBLE_TAP,
-    TD_DOUBLE_HOLD,
-    TD_DOUBLE_SINGLE_TAP, // Send two single taps
-    TD_TRIPLE_TAP,
-    TD_TRIPLE_HOLD
-} td_state_t;
-
-typedef struct {
-    bool       is_press_action;
-    td_state_t state;
-} td_tap_t;
-
-// Function to determine the current tapdance state
-td_state_t cur_dance(tap_dance_state_t *state);
-
-////////////////////////////
-
-enum dance_keys { DANCE_RALT, DANCE_LGUI };
+enum custom_keycodes {
+  TG_GAME = SAFE_RANGE,
+};
 
 #define BSPC_LOWR LT(LAYER_UNDEFINED, KC_BSPC)
 #define TAB_UPPR LT(LAYER_UNDEFINED, KC_TAB)
@@ -36,25 +15,25 @@ enum dance_keys { DANCE_RALT, DANCE_LGUI };
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [LAYER_ALPHA] = LAYOUT(
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,        XXXXXXX,                  /**/                 XXXXXXX,   XXXXXXX,        XXXXXXX,        XXXXXXX, XXXXXXX,        XXXXXXX, 
-        XXXXXXX, FR_Q,    FR_W,    FR_F,    FR_P,           FR_G,                     /**/                 FR_J,      FR_L,           FR_U,           FR_Y,    LALT_T(KC_ESC), XXXXXXX,
-        XXXXXXX, FR_A,    FR_R,    FR_S,    FR_T,           FR_D,                     /**/                 FR_H,      FR_N,           FR_E,           FR_I,    FR_O,           FR_QUOT,
-        XXXXXXX, FR_Z,    FR_X,    FR_C,    FR_V,           FR_B,     XXXXXXX,        /**/ XXXXXXX,        FR_K,      FR_M,           FR_COMM,        FR_SCLN, KC_DOT,         XXXXXXX,
-                                   XXXXXXX, TD(DANCE_LGUI), TAB_UPPR, LSFT_T(KC_SPC), /**/ LCTL_T(KC_ENT), BSPC_LOWR, TD(DANCE_RALT), XXXXXXX
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                  /**/                 XXXXXXX,   XXXXXXX,         XXXXXXX,        XXXXXXX, XXXXXXX,               XXXXXXX, 
+        XXXXXXX, FR_Q,    FR_W,    FR_F,    FR_P,    FR_G,                     /**/                 FR_J,      FR_L,            FR_U,           FR_Y,    LALT_T(KC_ESC),        XXXXXXX,
+        XXXXXXX, FR_A,    FR_R,    FR_S,    FR_T,    FR_D,                     /**/                 FR_H,      FR_N,            FR_E,           FR_I,    FR_O,                  XXXXXXX,
+        XXXXXXX, FR_Z,    FR_X,    FR_C,    FR_V,    FR_B,     XXXXXXX,        /**/ TG_GAME,        FR_K,      FR_M,            FR_COMM,        FR_SCLN, LT(LAYER_FN, FR_COLN), XXXXXXX,
+                                   XXXXXXX, KC_LGUI, TAB_UPPR, LSFT_T(KC_SPC), /**/ LCTL_T(KC_ENT), BSPC_LOWR, RALT_T(KC_RCTL), XXXXXXX
     ),
     [LAYER_NUM] = LAYOUT(
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          /**/          XXXXXXX, XXXXXXX,        XXXXXXX, XXXXXXX, XXXXXXX,        XXXXXXX, 
-        XXXXXXX, XXXXXXX, KC_P1,   KC_P2,   KC_P3,   XXXXXXX,          /**/          XXXXXXX, XXXXXXX,        XXXXXXX, XXXXXXX, LALT_T(KC_ESC), XXXXXXX,
-        XXXXXXX, XXXXXXX, KC_P4,   KC_P5,   KC_P6,   XXXXXXX,          /**/          XXXXXXX, KC_LEFT,        KC_DOWN, KC_UP,   KC_RIGHT,       XXXXXXX,
-        XXXXXXX, XXXXXXX, KC_P7,   KC_P8,   KC_P9,   KC_P0,   XXXXXXX, /**/ XXXXXXX, XXXXXXX, KC_HOME,        KC_PGDN, KC_PGUP, KC_END,         XXXXXXX,
-                                   XXXXXXX, KC_LGUI, _______, _______, /**/ _______, _______, TD(DANCE_RALT), XXXXXXX
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, 
+        XXXXXXX, XXXXXXX, KC_P1,   KC_P2,   KC_P3,   XXXXXXX,          /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,  XXXXXXX,
+        XXXXXXX, XXXXXXX, KC_P4,   KC_P5,   KC_P6,   XXXXXXX,          /**/          XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, XXXXXXX,
+        XXXXXXX, XXXXXXX, KC_P7,   KC_P8,   KC_P9,   KC_P0,   XXXXXXX, /**/ XXXXXXX, XXXXXXX, KC_HOME, KC_PGDN, KC_PGUP, KC_END,   XXXXXXX,
+                                   XXXXXXX, _______, _______, _______, /**/ _______, _______, _______, XXXXXXX
     ),
     [LAYER_SYMB] = LAYOUT(
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,        XXXXXXX,                 /**/          XXXXXXX, XXXXXXX,        XXXXXXX,        XXXXXXX, XXXXXXX, XXXXXXX, 
-        XXXXXXX, FR_EXLM, FR_AT,   FR_HASH, FR_DLR,         FR_PERC,                 /**/          FR_CART, FR_AMPR,        FR_LPRN,        FR_RPRN, FR_ASTR, FR_TILD,
-        XXXXXXX, FR_LABK, FR_DIAE, FR_CIRC, OSL(LAYER_ACC), OSL(LAYER_GRV),          /**/          FR_MINS, FR_EQL,         FR_LBRC,        FR_RBRC, FR_BSLS, FR_GRV,
-        XXXXXXX, XXXXXXX, XXXXXXX, FR_CCED, XXXXXXX,        FR_TILD,        XXXXXXX, /**/ XXXXXXX, FR_UNDS, FR_PLUS,        FR_LCBR,        FR_RCBR, FR_PIPE, KC_BSPC,
-                                   XXXXXXX, KC_LGUI,        _______,        _______, /**/ _______, _______, TD(DANCE_RALT), XXXXXXX
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,        XXXXXXX,                 /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, 
+        XXXXXXX, FR_EXLM, FR_AT,   FR_HASH, FR_DLR,         FR_PERC,                 /**/          FR_CART, FR_AMPR, FR_LPRN, FR_RPRN, FR_ASTR, XXXXXXX,
+        XXXXXXX, FR_LABK, FR_DIAE, FR_CIRC, OSL(LAYER_ACC), OSL(LAYER_GRV),          /**/          FR_MINS, FR_EQL,  FR_LBRC, FR_RBRC, FR_BSLS, XXXXXXX,
+        XXXXXXX, FR_GRV,  FR_QUOT, FR_CCED, XXXXXXX,        FR_TILD,        XXXXXXX, /**/ XXXXXXX, FR_UNDS, FR_PLUS, FR_LCBR, FR_RCBR, FR_PIPE, XXXXXXX,
+                                   XXXXXXX, _______,        _______,        _______, /**/ _______, _______, _______, XXXXXXX
     ),
     [LAYER_META] = LAYOUT(
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, 
@@ -67,29 +46,29 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, 
         XXXXXXX, KC_F1,   KC_F2,   KC_F3,   KC_F4,   XXXXXXX,          /**/          XXXXXXX, KC_PSCR, XXXXXXX, XXXXXXX, XXXXXXX, KC_CAPS,
         XXXXXXX, KC_F5,   KC_F6,   KC_F7,   KC_F8,   XXXXXXX,          /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_NUM,
-        XXXXXXX, KC_F9,   KC_F10,  KC_F11,  KC_F12,  XXXXXXX, XXXXXXX, /**/ XXXXXXX, XXXXXXX, KC_MUTE, KC_VOLD, KC_VOLU, XXXXXXX, XXXXXXX,
-                                   XXXXXXX, KC_LGUI, XXXXXXX, XXXXXXX, /**/ XXXXXXX, XXXXXXX, _______, XXXXXXX
+        XXXXXXX, KC_F9,   KC_F10,  KC_F11,  KC_F12,  XXXXXXX, XXXXXXX, /**/ XXXXXXX, XXXXXXX, KC_MUTE, KC_VOLD, KC_VOLU, _______, XXXXXXX,
+                                   _______, _______, XXXXXXX, _______, /**/ _______, XXXXXXX, _______, XXXXXXX
     ),
     [LAYER_GRV] = LAYOUT(
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, 
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          /**/          XXXXXXX, XXXXXXX, FR_UGRV, XXXXXXX, XXXXXXX, XXXXXXX,
         XXXXXXX, FR_AGRV, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          /**/          XXXXXXX, XXXXXXX, FR_EGRV, XXXXXXX, XXXXXXX, XXXXXXX,
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-                                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
+                                   XXXXXXX, _______, XXXXXXX, _______, /**/ _______, XXXXXXX, _______, XXXXXXX
     ),
     [LAYER_ACC] = LAYOUT(
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, 
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          /**/          XXXXXXX, XXXXXXX, FR_EACU, XXXXXXX, XXXXXXX, XXXXXXX,
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-                                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
+                                   XXXXXXX, _______, XXXXXXX, _______, /**/ _______, XXXXXXX, _______, XXXXXXX
     ),
     [LAYER_GAME] = LAYOUT(
-        XXXXXXX, FR_AMPR, FR_EACU, FR_DQUO,      FR_QUOT,        FR_LPRN,                    /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, 
-        KC_TAB,  FR_COMM, FR_A,    FR_Z,         FR_E,           FR_R,                       /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        KC_LSFT, XXXXXXX, FR_Q,    FR_S,         FR_D,           FR_F,                       /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        KC_LCTL, XXXXXXX, FR_X,    FR_C,         FR_G,           FR_B,               KC_ENT, /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-                                   MO(LAYER_FN), TD(DANCE_LGUI), MO(LAYER_GAME_ALT), KC_SPC, /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
+        XXXXXXX, FR_AMPR, FR_EACU, FR_DQUO,      FR_QUOT, FR_LPRN,                    /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, 
+        KC_TAB,  FR_COMM, FR_A,    FR_Z,         FR_E,    FR_R,                       /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        KC_LSFT, XXXXXXX, FR_Q,    FR_S,         FR_D,    FR_F,                       /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        KC_LCTL, XXXXXXX, FR_X,    FR_C,         FR_G,    FR_B,               KC_ENT, /**/ TG_GAME, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+                                   MO(LAYER_FN), KC_LGUI, MO(LAYER_GAME_ALT), KC_SPC, /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
     ),
     [LAYER_GAME_ALT] = LAYOUT(
         XXXXXXX, FR_MINS, FR_EGRV, FR_UNDS, FR_CCED, FR_AGRV,          /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
@@ -129,21 +108,37 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             }
             return true;
+        case TG_GAME:
+            if (record->event.pressed) {
+                if (layer_state_is(LAYER_GAME) || layer_state_is(LAYER_GAME_ALT)) {
+                    // Switch NKRO off
+                    clear_keyboard(); // clear first buffer to prevent stuck keys
+                    keymap_config.nkro = false;
+                    layer_off(LAYER_GAME);
+                } else {
+                    // Switch N-Key RollOver on only on the gaming layer
+                    clear_keyboard(); // clear first buffer to prevent stuck keys
+                    keymap_config.nkro = true;
+                    layer_on(LAYER_GAME);
+                }
+                return false;
+            }
+            return true;
         default:
             return true;
     }
 }
 
 void keyboard_pre_init_user(void) {
-  // Set our LED pin as output
-  setPinOutput(24);
-  // Turn the LED off
-  // (Due to technical reasons, high is off and low is on)
-  writePinHigh(24);
+    // Set our LED pin as output
+    setPinOutput(24);
+    // Turn the LED off
+    // (Due to technical reasons, high is off and low is on)
+    writePinHigh(24);
 
-  // Turn NKRO off after each boot
-  clear_keyboard();
-  keymap_config.nkro = false;
+    // Turn NKRO off after each boot
+    clear_keyboard();
+    keymap_config.nkro = false;
 }
 
 #if defined(ENCODER_ENABLE) && defined(ENCODER_MAP_ENABLE)
@@ -157,10 +152,31 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LSFT_T(KC_SPC):
         case LCTL_T(KC_ENT):
-            return false;
         case LALT_T(KC_ESC):
+        case RALT_T(KC_LCTL):
+            return true;
+        default:
+            return false;
+    }
+}
+#endif
+
+#if defined(HOLD_ON_OTHER_KEY_PRESS_PER_KEY)
+bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
         case BSPC_LOWR:
         case TAB_UPPR:
+            return true;
+        default:
+            return false;
+    }
+}
+#endif
+
+#if defined(RETRO_TAPPING_PER_KEY)
+bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case LT(LAYER_FN, FR_COLN):
             return true;
         default:
             return false;
@@ -171,14 +187,9 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
 #if defined(TAPPING_TERM_PER_KEY)
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case TD(DANCE_RALT):
-            return TAPPING_TERM - 50;
-        // Set a long-ish tapping term for tap-dance keys
-        // case QK_TAP_DANCE ... QK_TAP_DANCE_MAX:
-        //     return TAPPING_TERM;
         case LSFT_T(KC_SPC):
         case LCTL_T(KC_ENT):
-            return TAPPING_TERM + 75;
+            // return TAPPING_TERM + 50;
         default:
             return TAPPING_TERM;
     }
@@ -190,13 +201,13 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL);
 // Media control keys (only on LAYER_FN):
 // - SHIFT + VOLUME_MUTE = MEDIA_PREVIOUS
-// - SHIFT + VOLUME_DOWN = MEDIA_PLAY_PAUSE
-// - SHIFT + VOLUME_UP = MEDIA_NEXT
 const key_override_t media_previous_override   = ko_make_with_layers(MOD_MASK_SHIFT, KC_MUTE, KC_MPRV, 1 << LAYER_FN);
+// - SHIFT + VOLUME_DOWN = MEDIA_PLAY_PAUSE
 const key_override_t media_play_pause_override = ko_make_with_layers(MOD_MASK_SHIFT, KC_VOLD, KC_MPLY, 1 << LAYER_FN);
+// - SHIFT + VOLUME_UP = MEDIA_NEXT
 const key_override_t media_next_override       = ko_make_with_layers(MOD_MASK_SHIFT, KC_VOLU, KC_MNXT, 1 << LAYER_FN);
 // - SHIFT + QUOTE = DQUOTE
-const key_override_t dquote_override = ko_make_with_layers(MOD_MASK_SHIFT, FR_QUOT, FR_DQUO, 1 << LAYER_ALPHA);
+const key_override_t dquote_override = ko_make_basic(MOD_MASK_SHIFT, FR_QUOT, FR_DQUO);
 
 // clang-format off
 const key_override_t **key_overrides = (const key_override_t *[]){
@@ -368,118 +379,3 @@ bool oled_task_user(void) {
     }
 }
 #endif
-
-//////////////////////////////
-
-td_state_t cur_dance(tap_dance_state_t *state) {
-    if (state->count == 1) {
-        if (state->interrupted || !state->pressed) return TD_SINGLE_TAP;
-        // Key has not been interrupted, but the key is still held. Means you want to send a 'HOLD'.
-        else
-            return TD_SINGLE_HOLD;
-    } else if (state->count == 2) {
-        // TD_DOUBLE_SINGLE_TAP is to distinguish between typing "pepper", and actually wanting a double tap
-        // action when hitting 'pp'. Suggested use case for this return value is when you want to send two
-        // keystrokes of the key, and not the 'double tap' action/macro.
-        if (state->interrupted)
-            return TD_DOUBLE_SINGLE_TAP;
-        else if (state->pressed)
-            return TD_DOUBLE_HOLD;
-        else
-            return TD_DOUBLE_TAP;
-    }
-
-    // Assumes no one is trying to type the same letter three times (at least not quickly).
-    // If your tap dance key is 'KC_W', and you want to type "www." quickly - then you will need to add
-    // an exception here to return a 'TD_TRIPLE_SINGLE_TAP', and define that enum just like 'TD_DOUBLE_SINGLE_TAP'
-    if (state->count == 3) {
-        if (state->interrupted || !state->pressed)
-            return TD_TRIPLE_TAP;
-        else
-            return TD_TRIPLE_HOLD;
-    } else
-        return TD_UNKNOWN;
-}
-
-///////////////////////////
-
-static td_tap_t ralt_tap_state = {.is_press_action = true, .state = TD_NONE};
-static td_tap_t lgui_tap_state = {.is_press_action = true, .state = TD_NONE};
-
-void ralt_finished(tap_dance_state_t *state, void *user_state) {
-    switch (ralt_tap_state.state = cur_dance(state)) {
-        case TD_DOUBLE_HOLD:
-            layer_on(LAYER_FN);
-            break;
-        case TD_SINGLE_TAP:
-            register_code(KC_RCTL);
-            break;
-        case TD_SINGLE_HOLD:
-            register_code(KC_RALT);
-            break;
-        default:
-            break;
-    }
-}
-
-void ralt_reset(tap_dance_state_t *state, void *user_data) {
-    switch (ralt_tap_state.state) {
-        case TD_DOUBLE_HOLD:
-            layer_off(LAYER_FN);
-            break;
-        case TD_SINGLE_TAP:
-            unregister_code(KC_RCTL);
-            break;
-        case TD_SINGLE_HOLD:
-            unregister_code(KC_RALT);
-            break;
-        default:
-            break;
-    }
-    ralt_tap_state.state = TD_NONE;
-}
-
-void switch_game_layer(void) {
-    if (layer_state_is(LAYER_GAME) || layer_state_is(LAYER_GAME_ALT)) {
-        // Switch NKRO off
-        clear_keyboard(); // clear first buffer to prevent stuck keys
-        keymap_config.nkro = false;
-        layer_off(LAYER_GAME);
-    } else {
-        // Switch N-Key RollOver on only on the gaming layer
-        clear_keyboard(); // clear first buffer to prevent stuck keys
-        keymap_config.nkro = true;
-        layer_on(LAYER_GAME);
-    }
-}
-
-void lgui_finished(tap_dance_state_t *state, void *user_state) {
-    switch (lgui_tap_state.state = cur_dance(state)) {
-        case TD_SINGLE_TAP:
-        case TD_SINGLE_HOLD:
-          register_code(KC_LGUI);
-          break;
-        case TD_DOUBLE_SINGLE_TAP:
-        case TD_DOUBLE_TAP:
-          switch_game_layer();
-          break;
-        default: 
-          break;
-    }
-}
-
-void lgui_reset(tap_dance_state_t *state, void *user_data) {
-    switch (lgui_tap_state.state) {
-        case TD_SINGLE_TAP:
-        case TD_SINGLE_HOLD:
-            unregister_code(KC_LGUI);
-            break;
-        default:
-            break;
-    }
-}
-
-tap_dance_action_t tap_dance_actions[] = {
-  [DANCE_RALT] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, ralt_finished, ralt_reset),
-  [DANCE_LGUI] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, lgui_finished, lgui_reset),
-};

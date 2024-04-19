@@ -12,6 +12,6 @@ CONVERT_TO = liatris
 # Enable key overrides
 KEY_OVERRIDE_ENABLE = yes
 
-TAP_DANCE_ENABLE = yes
+# TAP_DANCE_ENABLE = yes
 
 TRI_LAYER_ENABLE = yes

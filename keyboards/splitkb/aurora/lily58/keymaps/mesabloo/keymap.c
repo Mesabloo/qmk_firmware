@@ -7,6 +7,7 @@
 
 enum custom_keycodes {
   TG_GAME = SAFE_RANGE,
+  GAME_ENT,
 };
 
 #define BSPC_LOWR LT(LAYER_UNDEFINED, KC_BSPC)
@@ -18,7 +19,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                  /**/                 XXXXXXX,   XXXXXXX,         XXXXXXX,        XXXXXXX, XXXXXXX,               XXXXXXX, 
         XXXXXXX, FR_Q,    FR_W,    FR_F,    FR_P,    FR_G,                     /**/                 FR_J,      FR_L,            FR_U,           FR_Y,    LALT_T(KC_ESC),        XXXXXXX,
         XXXXXXX, FR_A,    FR_R,    FR_S,    FR_T,    FR_D,                     /**/                 FR_H,      FR_N,            FR_E,           FR_I,    FR_O,                  XXXXXXX,
-        XXXXXXX, FR_Z,    FR_X,    FR_C,    FR_V,    FR_B,     XXXXXXX,        /**/ TG_GAME,        FR_K,      FR_M,            FR_COMM,        FR_SCLN, LT(LAYER_FN, FR_COLN), XXXXXXX,
+        XXXXXXX, FR_Z,    FR_X,    FR_C,    FR_V,    FR_B,     GAME_ENT,       /**/ TG_GAME,        FR_K,      FR_M,            FR_COMM,        FR_SCLN, LT(LAYER_FN, FR_COLN), XXXXXXX,
                                    XXXXXXX, KC_LGUI, TAB_UPPR, LSFT_T(KC_SPC), /**/ LCTL_T(KC_ENT), BSPC_LOWR, RALT_T(KC_RCTL), XXXXXXX
     ),
     [LAYER_NUM] = LAYOUT(
@@ -64,11 +65,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                    XXXXXXX, _______, XXXXXXX, _______, /**/ _______, XXXXXXX, _______, XXXXXXX
     ),
     [LAYER_GAME] = LAYOUT(
-        XXXXXXX, FR_AMPR, FR_EACU, FR_DQUO,      FR_QUOT, FR_LPRN,                    /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, 
-        KC_TAB,  FR_COMM, FR_A,    FR_Z,         FR_E,    FR_R,                       /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        KC_LSFT, XXXXXXX, FR_Q,    FR_S,         FR_D,    FR_F,                       /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        KC_LCTL, XXXXXXX, FR_X,    FR_C,         FR_G,    FR_B,               KC_ENT, /**/ TG_GAME, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-                                   MO(LAYER_FN), KC_LGUI, MO(LAYER_GAME_ALT), KC_SPC, /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
+        XXXXXXX, FR_AMPR, FR_EACU, FR_DQUO,      FR_QUOT, FR_LPRN,                      /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, 
+        KC_TAB,  FR_COMM, FR_A,    FR_Z,         FR_E,    FR_R,                         /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        KC_LSFT, XXXXXXX, FR_Q,    FR_S,         FR_D,    FR_F,                         /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        KC_LCTL, XXXXXXX, FR_X,    FR_C,         FR_G,    FR_B,               GAME_ENT, /**/ TG_GAME, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+                                   MO(LAYER_FN), KC_LGUI, MO(LAYER_GAME_ALT), KC_SPC,   /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
     ),
     [LAYER_GAME_ALT] = LAYOUT(
         XXXXXXX, FR_MINS, FR_EGRV, FR_UNDS, FR_CCED, FR_AGRV,          /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
@@ -116,6 +117,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     keymap_config.nkro = false;
                     layer_off(LAYER_GAME);
                 } else {
+                    // Switch N-Key RollOver on only on the gaming layer
+                    clear_keyboard(); // clear first buffer to prevent stuck keys
+                    keymap_config.nkro = true;
+                    layer_on(LAYER_GAME);
+                }
+                return false;
+            }
+            return true;
+        case GAME_ENT:
+            if (record->event.pressed) {
+                if (layer_state_is(LAYER_GAME) || layer_state_is(LAYER_GAME_ALT)) {
+                    // Switch NKRO off
+                    clear_keyboard(); // clear first buffer to prevent stuck keys
+                    keymap_config.nkro = false;
+                    layer_off(LAYER_GAME);
+                    // Then press the ENTER key
+                    tap_code(KC_ENT);
+                } else {
+                    // Press the ENTER key
+                    tap_code(KC_ENT);
                     // Switch N-Key RollOver on only on the gaming layer
                     clear_keyboard(); // clear first buffer to prevent stuck keys
                     keymap_config.nkro = true;

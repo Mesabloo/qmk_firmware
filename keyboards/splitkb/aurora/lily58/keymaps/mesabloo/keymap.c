@@ -22,6 +22,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         XXXXXXX, FR_Z,    FR_X,    FR_C,    FR_V,    FR_B,     GAME_ENT,       /**/ TG_GAME,        FR_K,      FR_M,            FR_COMM,        FR_SCLN, LT(LAYER_FN, FR_COLN), XXXXXXX,
                                    XXXXXXX, KC_LGUI, TAB_UPPR, LSFT_T(KC_SPC), /**/ LCTL_T(KC_ENT), BSPC_LOWR, RALT_T(KC_RCTL), XXXXXXX
     ),
+    [LAYER_GAME] = LAYOUT(
+        XXXXXXX, FR_AMPR, FR_EACU, FR_DQUO,      FR_QUOT, FR_LPRN,                      /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, 
+        KC_TAB,  FR_COMM, FR_A,    FR_Z,         FR_E,    FR_R,                         /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        KC_LSFT, XXXXXXX, FR_Q,    FR_S,         FR_D,    FR_F,                         /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        KC_LCTL, XXXXXXX, FR_X,    FR_C,         FR_G,    FR_B,               GAME_ENT, /**/ TG_GAME, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+                                   MO(LAYER_FN), KC_LGUI, MO(LAYER_GAME_ALT), KC_SPC,   /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
+    ),
+    [LAYER_GAME_ALT] = LAYOUT(
+        XXXXXXX, FR_MINS, FR_EGRV, FR_UNDS, FR_CCED, FR_AGRV,          /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        KC_ESC,  FR_M,    FR_W,    _______, XXXXXXX, KC_BSPC,          /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        _______, XXXXXXX, _______, _______, _______, FR_T,             /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        _______, XXXXXXX, XXXXXXX, FR_V,    XXXXXXX, XXXXXXX, _______, /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+                                   _______, _______, _______, _______, /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
+    ),
     [LAYER_NUM] = LAYOUT(
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, 
         XXXXXXX, XXXXXXX, KC_P1,   KC_P2,   KC_P3,   XXXXXXX,          /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,  XXXXXXX,
@@ -63,23 +77,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          /**/          XXXXXXX, XXXXXXX, FR_EACU, XXXXXXX, XXXXXXX, XXXXXXX,
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                                    XXXXXXX, _______, XXXXXXX, _______, /**/ _______, XXXXXXX, _______, XXXXXXX
-    ),
-    [LAYER_GAME] = LAYOUT(
-        XXXXXXX, FR_AMPR, FR_EACU, FR_DQUO,      FR_QUOT, FR_LPRN,                      /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, 
-        KC_TAB,  FR_COMM, FR_A,    FR_Z,         FR_E,    FR_R,                         /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        KC_LSFT, XXXXXXX, FR_Q,    FR_S,         FR_D,    FR_F,                         /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        KC_LCTL, XXXXXXX, FR_X,    FR_C,         FR_G,    FR_B,               GAME_ENT, /**/ TG_GAME, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-                                   MO(LAYER_FN), KC_LGUI, MO(LAYER_GAME_ALT), KC_SPC,   /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
-    ),
-    [LAYER_GAME_ALT] = LAYOUT(
-        XXXXXXX, FR_MINS, FR_EGRV, FR_UNDS, FR_CCED, FR_AGRV,          /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        KC_ESC,  FR_M,    XXXXXXX, _______, XXXXXXX, KC_BSPC,          /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        _______, XXXXXXX, _______, _______, _______, XXXXXXX,          /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        _______, XXXXXXX, XXXXXXX, FR_V,    XXXXXXX, XXXXXXX, _______, /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-                                   _______, _______, _______, _______, /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
     )
 };
 // clang-format on
+
+static bool in_game_layer = false;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
@@ -116,17 +118,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     clear_keyboard(); // clear first buffer to prevent stuck keys
                     keymap_config.nkro = false;
                     layer_off(LAYER_GAME);
+                    in_game_layer = false;
                 } else {
                     // Switch N-Key RollOver on only on the gaming layer
                     clear_keyboard(); // clear first buffer to prevent stuck keys
                     keymap_config.nkro = true;
                     layer_on(LAYER_GAME);
+                    in_game_layer = true;
                 }
                 return false;
             }
             return true;
         case GAME_ENT:
-            if (record->event.pressed) {
+            if (record->event.pressed && in_game_layer) {
                 if (layer_state_is(LAYER_GAME) || layer_state_is(LAYER_GAME_ALT)) {
                     // Switch NKRO off
                     clear_keyboard(); // clear first buffer to prevent stuck keys

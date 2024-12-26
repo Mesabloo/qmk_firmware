@@ -12,6 +12,7 @@ enum custom_keycodes {
   MT_LBRC,
   MT_RBRC,
   MT_BSLS,
+  MT_QUOT,
 };
 
 #define BSPC_LOWR LT(LAYER_UNDEFINED, KC_BSPC)
@@ -23,21 +24,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         XXXXXXX, XXXXXXX,      XXXXXXX,      XXXXXXX,      XXXXXXX,      XXXXXXX,                  /**/          XXXXXXX,   XXXXXXX,         XXXXXXX,      XXXXXXX,      XXXXXXX,      XXXXXXX, 
         XXXXXXX, FR_Q,         FR_W,         FR_F,         FR_P,         FR_G,                     /**/          FR_J,      FR_L,            FR_U,         FR_Y,         KC_ESC,       XXXXXXX,
         XXXXXXX, LGUI_T(FR_A), LALT_T(FR_R), LSFT_T(FR_S), LCTL_T(FR_T), FR_D,                     /**/          FR_H,      LCTL_T(FR_N),    RSFT_T(FR_E), LALT_T(FR_I), RGUI_T(FR_O), XXXXXXX,
-        XXXXXXX, FR_Z,         FR_X,         FR_C,         FR_V,         FR_B,     GAME_ENT,       /**/ TG_GAME, FR_K,      FR_M,            FR_COMM,      FR_SCLN,      FR_COLN,      XXXXXXX,
+        XXXXXXX, FR_Z,         FR_X,         FR_C,         FR_V,         FR_B,     XXXXXXX,        /**/ TG_GAME, FR_K,      FR_M,            FR_COMM,      FR_SCLN,      FR_COLN,      XXXXXXX,
                                              XXXXXXX,      MO(LAYER_FN), TAB_UPPR, LSFT_T(KC_SPC), /**/ KC_ENT,  BSPC_LOWR, RALT_T(KC_RCTL), XXXXXXX
     ),
     [LAYER_GAME] = LAYOUT(
-        XXXXXXX, FR_AMPR, FR_EACU, FR_DQUO,      FR_QUOT,         FR_LPRN,                      /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, 
-        KC_TAB,  FR_COMM, FR_A,    FR_Z,         FR_E,            FR_R,                         /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        KC_LSFT, XXXXXXX, FR_Q,    FR_S,         FR_D,            FR_F,                         /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        KC_LCTL, XXXXXXX, FR_X,    FR_C,         FR_G,            FR_B,               GAME_ENT, /**/ TG_GAME, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-                                   MO(LAYER_FN), LALT_T(KC_LGUI), MO(LAYER_GAME_ALT), KC_SPC,   /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
+        XXXXXXX, FR_AMPR, FR_EACU, FR_DQUO,      FR_QUOT,         FR_LPRN,                    /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, 
+        KC_TAB,  FR_COMM, FR_A,    FR_Z,         FR_E,            FR_R,                       /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        KC_LSFT, FR_O,    FR_Q,    FR_S,         FR_D,            FR_F,                       /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        KC_LCTL, FR_Y,    FR_X,    FR_C,         FR_G,            FR_B,               KC_ENT, /**/ TG_GAME, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+                                   MO(LAYER_FN), LALT_T(KC_LGUI), MO(LAYER_GAME_ALT), KC_SPC, /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
     ),
     [LAYER_GAME_ALT] = LAYOUT(
         XXXXXXX, FR_MINS, FR_EGRV, FR_UNDS, FR_CCED, FR_AGRV,          /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        KC_ESC,  FR_M,    FR_W,    _______, XXXXXXX, KC_BSPC,          /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        KC_ESC,  FR_M,    FR_W,    _______, FR_I,    KC_BSPC,          /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
         _______, XXXXXXX, _______, _______, _______, FR_T,             /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        _______, XXXXXXX, XXXXXXX, FR_V,    XXXXXXX, FR_J,    _______, /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        _______, FR_L,    FR_N,    FR_V,    FR_H,    FR_J,    _______, /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                                    _______, _______, _______, _______, /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
     ),
     [LAYER_NUM] = LAYOUT(
@@ -50,7 +51,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [LAYER_SYMB] = LAYOUT(
         XXXXXXX, XXXXXXX,         XXXXXXX,         XXXXXXX,         XXXXXXX,         XXXXXXX,                 /**/          XXXXXXX, XXXXXXX,        XXXXXXX,         XXXXXXX,         XXXXXXX,         XXXXXXX, 
         XXXXXXX, FR_EXLM,         FR_AT,           FR_HASH,         FR_DLR,          FR_PERC,                 /**/          FR_CART, FR_AMPR,        FR_LPRN,         FR_RPRN,         FR_ASTR,         XXXXXXX,
-        XXXXXXX, LGUI_T(FR_LABK), LALT_T(MT_DIAE), LSFT_T(FR_CIRC), LCTL_T(FR_QUOT), FR_TILD,                 /**/          FR_MINS, LCTL_T(FR_EQL), RSFT_T(MT_LBRC), LALT_T(MT_RBRC), RGUI_T(MT_BSLS), XXXXXXX,
+        XXXXXXX, LGUI_T(FR_LABK), LALT_T(MT_DIAE), LSFT_T(FR_CIRC), LCTL_T(MT_QUOT), FR_TILD,                 /**/          FR_MINS, LCTL_T(FR_EQL), RSFT_T(MT_LBRC), LALT_T(MT_RBRC), RGUI_T(MT_BSLS), XXXXXXX,
         XXXXXXX, XXXXXXX,         FR_GRV,          FR_CCED,         OSL(LAYER_ACC),  OSL(LAYER_GRV), XXXXXXX, /**/ XXXXXXX, FR_UNDS, FR_PLUS,        FR_LCBR,         FR_RCBR,         FR_PIPE,         XXXXXXX,
                                                    XXXXXXX,         _______,         _______,        _______, /**/ _______, _______, _______,        XXXXXXX
     ),
@@ -174,6 +175,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case RGUI_T(MT_BSLS): 
             if (record->tap.count && record->event.pressed) {
                 tap_code16(FR_BSLS); 
+                return false;
+            }
+            return true;
+        case LCTL_T(MT_QUOT): 
+            if (record->tap.count && record->event.pressed) {
+                // if shift then ' else "
+                const uint8_t mods = get_mods();
+                if (mods & MOD_MASK_SHIFT) {
+                    // Temporarily disable SHIFT so that it outputs " not 3 
+                    del_mods(MOD_MASK_SHIFT); 
+                    tap_code16(FR_DQUO);
+                    // Now reregister the old modifier state in case we want to continue using SHIFT
+                    set_mods(mods);
+                } else {
+                    tap_code16(FR_QUOT);
+                }
                 return false;
             }
             return true;

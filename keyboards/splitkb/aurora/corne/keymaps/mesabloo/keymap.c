@@ -36,9 +36,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                    _______,          _______,        _______,        /**/ _______, _______,        _______
     ),
     [LAYER_META] = LAYOUT_split_3x6_3(
-        XXXXXXX, QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        XXXXXXX, RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX, /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        XXXXXXX, RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX, /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, /**/   DT_UP, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX, /**/ DT_PRNT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX, /**/ DT_DOWN, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                                    XXXXXXX, _______, XXXXXXX, /**/ XXXXXXX, _______, XXXXXXX
     ),
     [LAYER_FN] = LAYOUT_split_3x6_3(
@@ -169,7 +169,11 @@ bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         default:
+#if defined(DYNAMIC_TAPPING_TERM_ENABLE)
+            return g_tapping_term;
+#else
             return TAPPING_TERM;
+#endif
     }
 }
 #endif
@@ -324,6 +328,14 @@ static void render_mod_stat_shift_ctrl(uint8_t mods, led_t leds) {
     oled_write_P((mods & MOD_MASK_CTRL) ? ctrl_on : ctrl_off, false);
 };
 
+#if defined(DYNAMIC_TAPPING_TERM_ENABLE)
+static void render_tapping_term(void) {
+    static char PROGMEM tterm[] = {0, 0, 0, 0, 0, 0x0};
+    sprintf(tterm, "%05d", g_tapping_term);
+    oled_write_P(tterm, false);
+}
+#endif
+
 bool oled_task_user(void) {
     if (is_keyboard_master()) {
         render_logo();
@@ -333,7 +345,12 @@ bool oled_task_user(void) {
         render_space();
         render_flower();
         render_space();
+#if defined(DYNAMIC_TAPPING_TERM_ENABLE)
+	render_tapping_term();
+#else
         render_space();
+#endif
+      
         //render_space();
 
         led_t leds = host_keyboard_led_state();

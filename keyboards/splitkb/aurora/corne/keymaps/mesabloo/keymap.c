@@ -6,10 +6,10 @@
 ////////////////////////////
 
 enum custom_keycodes {
-  MT_DIAE = SAFE_RANGE,
-  MT_LBRC,
-  MT_RBRC,
-  MT_BSLS,
+    MT_DIAE = SAFE_RANGE,
+    MT_LBRC,
+    MT_RBRC,
+    MT_BSLS,
 };
 
 #define BSPC_LOWR LT(LAYER_UNDEFINED, KC_BSPC)
@@ -18,9 +18,9 @@ enum custom_keycodes {
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [LAYER_ALPHA] = LAYOUT_split_3x6_3(
-        XXXXXXX, FR_Q,         FR_W,         FR_F,         FR_P,         FR_G,           /**/ FR_J,   FR_L,         FR_U,            FR_Y,         LALT_T(KC_ESC), XXXXXXX,
-        XXXXXXX, LGUI_T(FR_A), LALT_T(FR_R), LSFT_T(FR_S), LCTL_T(FR_T), FR_D,           /**/ FR_H,   LCTL_T(FR_N), RSFT_T(FR_E),    LALT_T(FR_I), RGUI_T(FR_O),   XXXXXXX,
-        XXXXXXX, FR_Z,         FR_X,         FR_C,         FR_V,         FR_B,           /**/ FR_K,   FR_M,         FR_COMM,         FR_SCLN,      FR_COLN,        XXXXXXX,
+        XXXXXXX, FR_B,         FR_L,         FR_D,         FR_W,         FR_Z,           /**/ KC_ESC, FR_F,         FR_O,            FR_U,         FR_J,         XXXXXXX,
+        XXXXXXX, LGUI_T(FR_N), LALT_T(FR_R), LSFT_T(FR_T), LCTL_T(FR_S), FR_G,           /**/ FR_Y,   LCTL_T(FR_H), RSFT_T(FR_A),    LALT_T(FR_E), RGUI_T(FR_I), XXXXXXX,
+        XXXXXXX, FR_Q,         FR_X,         FR_M,         FR_C,         FR_V,           /**/ FR_K,   FR_P,         FR_COMM,         FR_SCLN,      FR_COLN,      XXXXXXX,
                                              MO(LAYER_FN), TAB_UPPR,     LSFT_T(KC_SPC), /**/ KC_ENT, BSPC_LOWR,    RALT_T(KC_RCTL)
     ),
     [LAYER_NUM] = LAYOUT_split_3x6_3(
@@ -90,27 +90,27 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             }
             return true;
-        case LALT_T(MT_DIAE): 
+        case LALT_T(MT_DIAE):
             if (record->tap.count && record->event.pressed) {
-                tap_code16(FR_DIAE); 
+                tap_code16(FR_DIAE);
                 return false;
             }
             return true;
         case RSFT_T(MT_LBRC):
             if (record->tap.count && record->event.pressed) {
-                tap_code16(FR_LBRC); 
-                return false;
-            }
-            return true;        
-        case LALT_T(MT_RBRC):
-            if (record->tap.count && record->event.pressed) {
-                tap_code16(FR_RBRC); 
+                tap_code16(FR_LBRC);
                 return false;
             }
             return true;
-        case RGUI_T(MT_BSLS): 
+        case LALT_T(MT_RBRC):
             if (record->tap.count && record->event.pressed) {
-                tap_code16(FR_BSLS); 
+                tap_code16(FR_RBRC);
+                return false;
+            }
+            return true;
+        case RGUI_T(MT_BSLS):
+            if (record->tap.count && record->event.pressed) {
+                tap_code16(FR_BSLS);
                 return false;
             }
             return true;
@@ -120,11 +120,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 void keyboard_pre_init_user(void) {
-  // Set our LED pin as output
-  setPinOutput(24);
-  // Turn the LED off
-  // (Due to technical reasons, high is off and low is on)
-  writePinHigh(24);
+    // Set our LED pin as output
+    setPinOutput(24);
+    // Turn the LED off
+    // (Due to technical reasons, high is off and low is on)
+    writePinHigh(24);
 }
 
 #if defined(ENCODER_ENABLE) && defined(ENCODER_MAP_ENABLE)
@@ -169,11 +169,11 @@ bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         default:
-#if defined(DYNAMIC_TAPPING_TERM_ENABLE)
+#    if defined(DYNAMIC_TAPPING_TERM_ENABLE)
             return g_tapping_term;
-#else
+#    else
             return TAPPING_TERM;
-#endif
+#    endif
     }
 }
 #endif
@@ -183,11 +183,11 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL);
 // Media control keys (only on LAYER_FN):
 // - SHIFT + VOLUME_MUTE = MEDIA_PREVIOUS
-const key_override_t media_previous_override   = ko_make_with_layers(MOD_MASK_SHIFT, KC_MUTE, KC_MPRV, 1 << LAYER_FN);
+const key_override_t media_previous_override = ko_make_with_layers(MOD_MASK_SHIFT, KC_MUTE, KC_MPRV, 1 << LAYER_FN);
 // - SHIFT + VOLUME_DOWN = MEDIA_PLAY_PAUSE
 const key_override_t media_play_pause_override = ko_make_with_layers(MOD_MASK_SHIFT, KC_VOLD, KC_MPLY, 1 << LAYER_FN);
 // - SHIFT + VOLUME_UP = MEDIA_NEXT
-const key_override_t media_next_override       = ko_make_with_layers(MOD_MASK_SHIFT, KC_VOLU, KC_MNXT, 1 << LAYER_FN);
+const key_override_t media_next_override = ko_make_with_layers(MOD_MASK_SHIFT, KC_VOLU, KC_MNXT, 1 << LAYER_FN);
 // - SHIFT + QUOTE = DQUOTE
 const key_override_t dquote_override = ko_make_basic(MOD_MASK_SHIFT, FR_QUOT, FR_DQUO);
 
@@ -274,32 +274,32 @@ static void render_flower(void) {
 
     if (layer_state_is(LAYER_ALPHA) || layer_state_is(LAYER_ACC) || layer_state_is(LAYER_GRV)) {
         oled_write_P(flower1, false);
-        //render_space();
-        //oled_write_P(" let ", false);
+        // render_space();
+        // oled_write_P(" let ", false);
     } else if (layer_state_is(LAYER_META)) {
         oled_write_P(flower5, false);
-        //render_space();
-        //oled_write_P(" sys ", false);
+        // render_space();
+        // oled_write_P(" sys ", false);
     } else if (layer_state_is(LAYER_NUM)) {
         oled_write_P(flower2, false);
-        //render_space();
-        //oled_write_P(" num ", false);
+        // render_space();
+        // oled_write_P(" num ", false);
     } else if (layer_state_is(LAYER_SYMB)) {
         oled_write_P(flower3, false);
-        //render_space();
-        //oled_write_P(" sym ", false);
+        // render_space();
+        // oled_write_P(" sym ", false);
     } else if (layer_state_is(LAYER_FN)) {
         oled_write_P(flower4, false);
-        //render_space();
-        //oled_write_P(" fun ", false);
+        // render_space();
+        // oled_write_P(" fun ", false);
     } else {
         oled_write_P(flower7, false);
-        //render_space();
-        //oled_write_P(" ... ", false);
+        // render_space();
+        // oled_write_P(" ... ", false);
     }
 }
 
-static const char PROGMEM lock_on[] = {0xBB, 0x0};
+static const char PROGMEM lock_on[]  = {0xBB, 0x0};
 static const char PROGMEM lock_off[] = {0x9B, 0x0};
 
 static void render_mod_stat_gui_alt(uint8_t mods, led_t leds) {
@@ -328,13 +328,13 @@ static void render_mod_stat_shift_ctrl(uint8_t mods, led_t leds) {
     oled_write_P((mods & MOD_MASK_CTRL) ? ctrl_on : ctrl_off, false);
 };
 
-#if defined(DYNAMIC_TAPPING_TERM_ENABLE)
+#    if defined(DYNAMIC_TAPPING_TERM_ENABLE)
 static void render_tapping_term(void) {
     static char PROGMEM tterm[] = {0, 0, 0, 0, 0, 0x0};
     sprintf(tterm, "%05d", g_tapping_term);
     oled_write_P(tterm, false);
 }
-#endif
+#    endif
 
 bool oled_task_user(void) {
     if (is_keyboard_master()) {
@@ -345,15 +345,15 @@ bool oled_task_user(void) {
         render_space();
         render_flower();
         render_space();
-#if defined(DYNAMIC_TAPPING_TERM_ENABLE)
-	render_tapping_term();
-#else
+#    if defined(DYNAMIC_TAPPING_TERM_ENABLE)
+        render_tapping_term();
+#    else
         render_space();
-#endif
-      
-        //render_space();
+#    endif
 
-        led_t leds = host_keyboard_led_state();
+        // render_space();
+
+        led_t   leds = host_keyboard_led_state();
         uint8_t mods = get_mods() | get_oneshot_mods();
         render_mod_stat_gui_alt(mods, leds);
         render_mod_stat_shift_ctrl(mods, leds);

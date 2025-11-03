@@ -5,6 +5,8 @@
 #define TAPPING_TERM_PER_KEY
 #define RETRO_TAPPING_PER_KEY
 
+#define TAPPING_TERM 170
+
 #if defined(OLED_ENABLE)
 #    if defined(OLED_FONT_H)
 #        undef OLED_FONT_H

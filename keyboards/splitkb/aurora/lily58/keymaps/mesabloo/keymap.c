@@ -6,13 +6,13 @@
 ////////////////////////////
 
 enum custom_keycodes {
-  TG_GAME = SAFE_RANGE,
-  GAME_ENT,
-  MT_DIAE,
-  MT_LBRC,
-  MT_RBRC,
-  MT_BSLS,
-  MT_QUOT,
+    TG_GAME = SAFE_RANGE,
+    GAME_ENT,
+    MT_DIAE,
+    MT_LBRC,
+    MT_RBRC,
+    MT_BSLS,
+    MT_QUOT,
 };
 
 #define BSPC_LOWR LT(LAYER_UNDEFINED, KC_BSPC)
@@ -22,9 +22,9 @@ enum custom_keycodes {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [LAYER_ALPHA] = LAYOUT(
         XXXXXXX, XXXXXXX,      XXXXXXX,      XXXXXXX,      XXXXXXX,      XXXXXXX,                  /**/          XXXXXXX,   XXXXXXX,         XXXXXXX,      XXXXXXX,      XXXXXXX,      XXXXXXX, 
-        XXXXXXX, FR_Q,         FR_W,         FR_F,         FR_P,         FR_G,                     /**/          FR_J,      FR_L,            FR_U,         FR_Y,         KC_ESC,       XXXXXXX,
-        XXXXXXX, LGUI_T(FR_A), LALT_T(FR_R), LSFT_T(FR_S), LCTL_T(FR_T), FR_D,                     /**/          FR_H,      LCTL_T(FR_N),    RSFT_T(FR_E), LALT_T(FR_I), RGUI_T(FR_O), XXXXXXX,
-        XXXXXXX, FR_Z,         FR_X,         FR_C,         FR_V,         FR_B,     XXXXXXX,        /**/ TG_GAME, FR_K,      FR_M,            FR_COMM,      FR_SCLN,      FR_COLN,      XXXXXXX,
+        XXXXXXX, FR_B,         FR_L,         FR_D,         FR_W,         FR_Z,                     /**/          KC_ESC,    FR_F,            FR_O,         FR_U,         FR_J,         XXXXXXX,
+        XXXXXXX, LGUI_T(FR_N), LALT_T(FR_R), LSFT_T(FR_T), LCTL_T(FR_S), FR_G,                     /**/          FR_Y,      LCTL_T(FR_H),    RSFT_T(FR_A), LALT_T(FR_E), RGUI_T(FR_I), XXXXXXX,
+        XXXXXXX, FR_Q,         FR_X,         FR_M,         FR_C,         FR_V,     XXXXXXX,        /**/ TG_GAME, FR_K,      FR_P,            FR_COMM,      FR_SCLN,      FR_COLN,      XXXXXXX,
                                              XXXXXXX,      MO(LAYER_FN), TAB_UPPR, LSFT_T(KC_SPC), /**/ KC_ENT,  BSPC_LOWR, RALT_T(KC_RCTL), XXXXXXX
     ),
     [LAYER_GAME] = LAYOUT(
@@ -52,13 +52,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         XXXXXXX, XXXXXXX,         XXXXXXX,         XXXXXXX,         XXXXXXX,         XXXXXXX,                 /**/          XXXXXXX, XXXXXXX,        XXXXXXX,         XXXXXXX,         XXXXXXX,         XXXXXXX, 
         XXXXXXX, FR_EXLM,         FR_AT,           FR_HASH,         FR_DLR,          FR_PERC,                 /**/          FR_CART, FR_AMPR,        FR_LPRN,         FR_RPRN,         FR_ASTR,         XXXXXXX,
         XXXXXXX, LGUI_T(FR_LABK), LALT_T(MT_DIAE), LSFT_T(FR_CIRC), LCTL_T(MT_QUOT), FR_TILD,                 /**/          FR_MINS, LCTL_T(FR_EQL), RSFT_T(MT_LBRC), LALT_T(MT_RBRC), RGUI_T(MT_BSLS), XXXXXXX,
-        XXXXXXX, XXXXXXX,         FR_GRV,          FR_CCED,         OSL(LAYER_ACC),  OSL(LAYER_GRV), XXXXXXX, /**/ XXXXXXX, FR_UNDS, FR_PLUS,        FR_LCBR,         FR_RCBR,         FR_PIPE,         XXXXXXX,
+        XXXXXXX, XXXXXXX,         OSL(LAYER_ACC),  OSL(LAYER_GRV),  FR_CCED,         FR_GRV,         XXXXXXX, /**/ XXXXXXX, FR_UNDS, FR_PLUS,        FR_LCBR,         FR_RCBR,         FR_PIPE,         XXXXXXX,
                                                    XXXXXXX,         _______,         _______,        _______, /**/ _______, _______, _______,        XXXXXXX
     ),
     [LAYER_META] = LAYOUT(
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, 
-        XXXXXXX, QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        XXXXXXX, RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX,          /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          /**/          DT_UP,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, 
+        XXXXXXX, QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          /**/          DT_PRNT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX,          /**/          DT_DOWN, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
         XXXXXXX, RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX, XXXXXXX, /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                                    XXXXXXX, XXXXXXX, _______, XXXXXXX, /**/ XXXXXXX, _______, XXXXXXX, XXXXXXX
     ),
@@ -71,15 +71,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [LAYER_GRV] = LAYOUT(
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, 
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          /**/          XXXXXXX, XXXXXXX, FR_UGRV, XXXXXXX, XXXXXXX, XXXXXXX,
-        XXXXXXX, FR_AGRV, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          /**/          XXXXXXX, XXXXXXX, FR_EGRV, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          /**/          XXXXXXX, XXXXXXX, XXXXXXX, FR_UGRV, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          /**/          XXXXXXX, XXXXXXX, FR_AGRV, FR_EGRV, XXXXXXX, XXXXXXX,
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                                    XXXXXXX, _______, XXXXXXX, _______, /**/ _______, XXXXXXX, _______, XXXXXXX
     ),
     [LAYER_ACC] = LAYOUT(
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, 
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          /**/          XXXXXXX, XXXXXXX, FR_EACU, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          /**/          XXXXXXX, XXXXXXX, XXXXXXX, FR_EACU, XXXXXXX, XXXXXXX,
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                                    XXXXXXX, _______, XXXXXXX, _______, /**/ _______, XXXXXXX, _______, XXXXXXX
     )
@@ -154,37 +154,37 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             }
             return true;
-        case LALT_T(MT_DIAE): 
+        case LALT_T(MT_DIAE):
             if (record->tap.count && record->event.pressed) {
-                tap_code16(FR_DIAE); 
+                tap_code16(FR_DIAE);
                 return false;
             }
             return true;
         case RSFT_T(MT_LBRC):
             if (record->tap.count && record->event.pressed) {
-                tap_code16(FR_LBRC); 
+                tap_code16(FR_LBRC);
                 return false;
             }
-            return true;        
+            return true;
         case LALT_T(MT_RBRC):
             if (record->tap.count && record->event.pressed) {
-                tap_code16(FR_RBRC); 
+                tap_code16(FR_RBRC);
                 return false;
             }
             return true;
-        case RGUI_T(MT_BSLS): 
+        case RGUI_T(MT_BSLS):
             if (record->tap.count && record->event.pressed) {
-                tap_code16(FR_BSLS); 
+                tap_code16(FR_BSLS);
                 return false;
             }
             return true;
-        case LCTL_T(MT_QUOT): 
+        case LCTL_T(MT_QUOT):
             if (record->tap.count && record->event.pressed) {
                 // if shift then ' else "
                 const uint8_t mods = get_mods();
                 if (mods & MOD_MASK_SHIFT) {
-                    // Temporarily disable SHIFT so that it outputs " not 3 
-                    del_mods(MOD_MASK_SHIFT); 
+                    // Temporarily disable SHIFT so that it outputs " not 3
+                    del_mods(MOD_MASK_SHIFT);
                     tap_code16(FR_DQUO);
                     // Now reregister the old modifier state in case we want to continue using SHIFT
                     set_mods(mods);
@@ -220,9 +220,9 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
 #if defined(PERMISSIVE_HOLD_PER_KEY)
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        //case LSFT_T(KC_SPC):
-        //case LCTL_T(KC_ENT):
-        //case LALT_T(KC_ESC):
+        // case LSFT_T(KC_SPC):
+        // case LCTL_T(KC_ENT):
+        // case LALT_T(KC_ESC):
         case RALT_T(KC_LCTL):
             return true;
         default:
@@ -255,24 +255,12 @@ bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
 #if defined(TAPPING_TERM_PER_KEY)
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case LGUI_T(FR_A):
-        case LALT_T(FR_R):
-        case LSFT_T(FR_S):
-        case LCTL_T(FR_T):
-        case LCTL_T(FR_N): 
-        case RSFT_T(FR_E):
-        case LALT_T(FR_I):
-        case RGUI_T(FR_O):
-        case LCTL_T(KC_LEFT):
-        case RSFT_T(KC_DOWN):
-        case LALT_T(KC_UP):
-        case RGUI_T(KC_RIGHT):
-            return TAPPING_TERM + 50;
-        //case LSFT_T(KC_SPC):
-        //case LCTL_T(KC_ENT):
-            // return TAPPING_TERM + 50;
         default:
+#    if defined(DYNAMIC_TAPPING_TERM_ENABLE)
+            return g_tapping_term;
+#    else
             return TAPPING_TERM;
+#    endif
     }
 }
 #endif
@@ -282,11 +270,11 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BSPC, KC_DEL);
 // Media control keys (only on LAYER_FN):
 // - SHIFT + VOLUME_MUTE = MEDIA_PREVIOUS
-const key_override_t media_previous_override   = ko_make_with_layers(MOD_MASK_SHIFT, KC_MUTE, KC_MPRV, 1 << LAYER_FN);
+const key_override_t media_previous_override = ko_make_with_layers(MOD_MASK_SHIFT, KC_MUTE, KC_MPRV, 1 << LAYER_FN);
 // - SHIFT + VOLUME_DOWN = MEDIA_PLAY_PAUSE
 const key_override_t media_play_pause_override = ko_make_with_layers(MOD_MASK_SHIFT, KC_VOLD, KC_MPLY, 1 << LAYER_FN);
 // - SHIFT + VOLUME_UP = MEDIA_NEXT
-const key_override_t media_next_override       = ko_make_with_layers(MOD_MASK_SHIFT, KC_VOLU, KC_MNXT, 1 << LAYER_FN);
+const key_override_t media_next_override = ko_make_with_layers(MOD_MASK_SHIFT, KC_VOLU, KC_MNXT, 1 << LAYER_FN);
 // - SHIFT + QUOTE = DQUOTE
 const key_override_t dquote_override = ko_make_basic(MOD_MASK_SHIFT, FR_QUOT, FR_DQUO);
 
@@ -380,34 +368,34 @@ static void render_flower(void) {
 
     if (layer_state_is(LAYER_ALPHA) || layer_state_is(LAYER_ACC) || layer_state_is(LAYER_GRV)) {
         oled_write_P(flower1, false);
-        //render_space();
-        //oled_write_P(" let ", false);
+        // render_space();
+        // oled_write_P(" let ", false);
     } else if (layer_state_is(LAYER_META)) {
         oled_write_P(flower5, false);
-        //render_space();
-        //oled_write_P(" sys ", false);
+        // render_space();
+        // oled_write_P(" sys ", false);
     } else if (layer_state_is(LAYER_NUM)) {
         oled_write_P(flower2, false);
-        //render_space();
-        //oled_write_P(" num ", false);
+        // render_space();
+        // oled_write_P(" num ", false);
     } else if (layer_state_is(LAYER_SYMB)) {
         oled_write_P(flower3, false);
-        //render_space();
-        //oled_write_P(" sym ", false);
+        // render_space();
+        // oled_write_P(" sym ", false);
     } else if (layer_state_is(LAYER_FN)) {
         oled_write_P(flower4, false);
-        //render_space();
-        //oled_write_P(" fun ", false);
+        // render_space();
+        // oled_write_P(" fun ", false);
     } else if (layer_state_is(LAYER_GAME) || layer_state_is(LAYER_GAME_ALT)) {
         oled_write_P(flower6, false);
     } else {
         oled_write_P(flower7, false);
-        //render_space();
-        //oled_write_P(" ... ", false);
+        // render_space();
+        // oled_write_P(" ... ", false);
     }
 }
 
-static const char PROGMEM lock_on[] = {0xBB, 0x0};
+static const char PROGMEM lock_on[]  = {0xBB, 0x0};
 static const char PROGMEM lock_off[] = {0x9B, 0x0};
 
 static void render_mod_stat_gui_alt(uint8_t mods, led_t leds) {
@@ -437,6 +425,14 @@ static void render_mod_stat_shift_ctrl(uint8_t mods, led_t leds) {
     oled_write_P((mods & MOD_MASK_CTRL) ? ctrl_on : ctrl_off, false);
 };
 
+#    if defined(DYNAMIC_TAPPING_TERM_ENABLE)
+static void render_tapping_term(void) {
+    static char PROGMEM tterm[] = {0, 0, 0, 0, 0, 0x0};
+    sprintf(tterm, "%05d", g_tapping_term);
+    oled_write_P(tterm, false);
+}
+#    endif
+
 bool oled_task_user(void) {
     if (is_keyboard_master()) {
         render_logo();
@@ -446,10 +442,14 @@ bool oled_task_user(void) {
         render_space();
         render_flower();
         render_space();
+#    if defined(DYNAMIC_TAPPING_TERM_ENABLE)
+        render_tapping_term();
+#    else
         render_space();
-        //render_space();
+#    endif
+        // render_space();
 
-        led_t leds = host_keyboard_led_state();
+        led_t   leds = host_keyboard_led_state();
         uint8_t mods = get_mods() | get_oneshot_mods();
         render_mod_stat_gui_alt(mods, leds);
         render_mod_stat_shift_ctrl(mods, leds);

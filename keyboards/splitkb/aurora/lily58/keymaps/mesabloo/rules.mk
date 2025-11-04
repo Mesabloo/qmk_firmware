@@ -14,6 +14,8 @@ KEY_OVERRIDE_ENABLE = yes
 
 # TAP_DANCE_ENABLE = yes
 
+DYNAMIC_TAPPING_TERM_ENABLE = yes
+
 TRI_LAYER_ENABLE = yes
 
 # Enable N-key rollover

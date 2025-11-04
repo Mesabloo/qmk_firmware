@@ -10,6 +10,7 @@ enum custom_keycodes {
     MT_LBRC,
     MT_RBRC,
     MT_BSLS,
+    MT_QUOT,
 };
 
 #define BSPC_LOWR LT(LAYER_UNDEFINED, KC_BSPC)
@@ -31,8 +32,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [LAYER_SYMB] = LAYOUT_split_3x6_3(
         XXXXXXX, FR_EXLM,         FR_AT,           FR_HASH,         FR_DLR,          FR_PERC,        /**/ FR_CART, FR_AMPR,        FR_LPRN,         FR_RPRN,         FR_ASTR,         XXXXXXX,
-        XXXXXXX, LGUI_T(FR_LABK), LALT_T(MT_DIAE), LSFT_T(FR_CIRC), LCTL_T(FR_QUOT), FR_TILD,        /**/ FR_MINS, LCTL_T(FR_EQL), RSFT_T(MT_LBRC), LALT_T(MT_RBRC), RGUI_T(MT_BSLS), XXXXXXX,
-        XXXXXXX, XXXXXXX,         FR_GRV,          FR_CCED,         OSL(LAYER_ACC),  OSL(LAYER_GRV), /**/ FR_UNDS, FR_PLUS,        FR_LCBR,         FR_RCBR,         FR_PIPE,         XXXXXXX,
+        XXXXXXX, LGUI_T(FR_LABK), LALT_T(MT_DIAE), LSFT_T(FR_CIRC), LCTL_T(MT_QUOT), FR_TILD,        /**/ FR_MINS, LCTL_T(FR_EQL), RSFT_T(MT_LBRC), LALT_T(MT_RBRC), RGUI_T(MT_BSLS), XXXXXXX,
+        XXXXXXX, XXXXXXX,         OSL(LAYER_ACC),  OSL(LAYER_GRV),  FR_CCED,         FR_GRV,         /**/ FR_UNDS, FR_PLUS,        FR_LCBR,         FR_RCBR,         FR_PIPE,         XXXXXXX,
                                                    _______,          _______,        _______,        /**/ _______, _______,        _______
     ),
     [LAYER_META] = LAYOUT_split_3x6_3(
@@ -48,14 +49,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                    _______, XXXXXXX, _______, /**/ _______, XXXXXXX,         _______
     ),
     [LAYER_GRV] = LAYOUT_split_3x6_3(
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, /**/ XXXXXXX, XXXXXXX, FR_UGRV, XXXXXXX, XXXXXXX, XXXXXXX,
-        XXXXXXX, FR_AGRV, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, /**/ XXXXXXX, XXXXXXX, FR_EGRV, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, /**/ XXXXXXX, XXXXXXX, XXXXXXX, FR_UGRV, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, /**/ XXXXXXX, XXXXXXX, FR_AGRV, FR_EGRV, XXXXXXX, XXXXXXX,
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                                    _______, XXXXXXX, _______, /**/ _______, XXXXXXX, _______
     ),
     [LAYER_ACC] = LAYOUT_split_3x6_3(
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, /**/ XXXXXXX, XXXXXXX, FR_EACU, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, /**/ XXXXXXX, XXXXXXX, XXXXXXX, FR_EACU, XXXXXXX, XXXXXXX,
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                                    _______, XXXXXXX, _______, /**/ _______, XXXXXXX, _______
     )
@@ -111,6 +112,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case RGUI_T(MT_BSLS):
             if (record->tap.count && record->event.pressed) {
                 tap_code16(FR_BSLS);
+                return false;
+            }
+            return true;
+        case LCTL_T(MT_QUOT):
+            if (record->tap.count && record->event.pressed) {
+                // if shift then ' else "
+                const uint8_t mods = get_mods();
+                if (mods & MOD_MASK_SHIFT) {
+                    // Temporarily disable SHIFT so that it outputs " not 3
+                    del_mods(MOD_MASK_SHIFT);
+                    tap_code16(FR_DQUO);
+                    // Now reregister the old modifier state in case we want to continue using SHIFT
+                    set_mods(mods);
+                } else {
+                    tap_code16(FR_QUOT);
+                }
                 return false;
             }
             return true;

@@ -38,8 +38,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [LAYER_META] = LAYOUT_split_3x6_3(
         XXXXXXX, QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, /**/   DT_UP, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        XXXXXXX, RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX, /**/ DT_PRNT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        XXXXXXX, RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX, /**/ DT_DOWN, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, UG_TOGG, UG_HUEU, UG_SATU, UG_VALU, XXXXXXX, /**/ DT_PRNT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, UG_HUED, UG_SATD, UG_VALD, XXXXXXX, /**/ DT_DOWN, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                                    XXXXXXX, _______, XXXXXXX, /**/ XXXXXXX, _______, XXXXXXX
     ),
     [LAYER_FN] = LAYOUT_split_3x6_3(
@@ -235,7 +235,7 @@ const key_override_t media_next_override = ko_make_with_layers(MOD_MASK_SHIFT, K
 const key_override_t dquote_override = ko_make_basic(MOD_MASK_SHIFT, FR_QUOT, FR_DQUO);
 
 // clang-format off
-const key_override_t **key_overrides = (const key_override_t *[]){
+const key_override_t *key_overrides[] = (const key_override_t *[]){
     &delete_key_override,
     &media_previous_override,
     &media_play_pause_override,

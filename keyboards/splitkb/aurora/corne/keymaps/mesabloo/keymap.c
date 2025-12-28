@@ -19,10 +19,10 @@ enum custom_keycodes {
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [LAYER_ALPHA] = LAYOUT_split_3x6_3(
-        XXXXXXX, FR_B,         FR_L,         FR_D,         FR_W,         FR_Z,           /**/ KC_ESC, FR_F,         FR_O,            FR_U,         FR_J,         XXXXXXX,
-        XXXXXXX, LGUI_T(FR_N), LALT_T(FR_R), LSFT_T(FR_T), LCTL_T(FR_S), FR_G,           /**/ FR_Y,   LCTL_T(FR_H), RSFT_T(FR_A),    LALT_T(FR_E), RGUI_T(FR_I), XXXXXXX,
-        XXXXXXX, FR_Q,         FR_X,         FR_M,         FR_C,         FR_V,           /**/ FR_K,   FR_P,         FR_COMM,         FR_SCLN,      FR_COLN,      XXXXXXX,
-                                             MO(LAYER_FN), TAB_UPPR,     LSFT_T(KC_SPC), /**/ KC_ENT, BSPC_LOWR,    RALT_T(KC_RCTL)
+        XXXXXXX, FR_B,         FR_L,         FR_D,         FR_W,         FR_Z,   /**/ KC_ESC, FR_F,         FR_O,            FR_U,         FR_J,         XXXXXXX,
+        XXXXXXX, LGUI_T(FR_N), LALT_T(FR_R), LSFT_T(FR_T), LCTL_T(FR_S), FR_G,   /**/ FR_Y,   LCTL_T(FR_H), RSFT_T(FR_A),    LALT_T(FR_E), RGUI_T(FR_I), XXXXXXX,
+        XXXXXXX, FR_Q,         FR_X,         FR_M,         FR_C,         FR_V,   /**/ FR_K,   FR_P,         FR_COMM,         FR_SCLN,      FR_COLN,      XXXXXXX,
+                                             MO(LAYER_FN), TAB_UPPR,     KC_SPC, /**/ LSFT_T(KC_ENT), BSPC_LOWR,    RALT_T(KC_RCTL)
     ),
     [LAYER_NUM] = LAYOUT_split_3x6_3(
         XXXXXXX, XXXXXXX,         KC_P1,         KC_P2,         KC_P3,         XXXXXXX, /**/ XXXXXXX, XXXXXXX,         XXXXXXX,         XXXXXXX,       XXXXXXX,          XXXXXXX,
@@ -31,10 +31,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                  _______,       _______,       _______, /**/ _______,  _______, _______
     ),
     [LAYER_SYMB] = LAYOUT_split_3x6_3(
-        XXXXXXX, FR_EXLM,         FR_AT,           FR_HASH,         FR_DLR,          FR_PERC,        /**/ FR_CART, FR_AMPR,        FR_LPRN,         FR_RPRN,         FR_ASTR,         XXXXXXX,
-        XXXXXXX, LGUI_T(FR_LABK), LALT_T(MT_DIAE), LSFT_T(FR_CIRC), LCTL_T(MT_QUOT), FR_TILD,        /**/ FR_MINS, LCTL_T(FR_EQL), RSFT_T(MT_LBRC), LALT_T(MT_RBRC), RGUI_T(MT_BSLS), XXXXXXX,
-        XXXXXXX, XXXXXXX,         OSL(LAYER_ACC),  OSL(LAYER_GRV),  FR_CCED,         FR_GRV,         /**/ FR_UNDS, FR_PLUS,        FR_LCBR,         FR_RCBR,         FR_PIPE,         XXXXXXX,
-                                                   _______,          _______,        _______,        /**/ _______, _______,        _______
+        XXXXXXX, FR_EXLM,         FR_AT,           FR_HASH,         FR_DLR,          FR_PERC, /**/ FR_CART, FR_AMPR,        FR_LPRN,         FR_RPRN,         FR_ASTR,         XXXXXXX,
+        XXXXXXX, LGUI_T(FR_LABK), LALT_T(MT_DIAE), LSFT_T(FR_CIRC), LCTL_T(MT_QUOT), FR_TILD, /**/ FR_MINS, LCTL_T(FR_EQL), RSFT_T(MT_LBRC), LALT_T(MT_RBRC), RGUI_T(MT_BSLS), XXXXXXX,
+        XXXXXXX, XXXXXXX,         OSL(LAYER_ACC),  OSL(LAYER_GRV),  FR_CCED,         FR_GRV,  /**/ FR_UNDS, FR_PLUS,        FR_LCBR,         FR_RCBR,         FR_PIPE,         XXXXXXX,
+                                                   _______,          _______,        _______, /**/ _______, _______,        _______
     ),
     [LAYER_META] = LAYOUT_split_3x6_3(
         XXXXXXX, QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, /**/   DT_UP, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
@@ -193,6 +193,32 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 #    endif
     }
 }
+#endif
+
+#if defined(CHORDAL_HOLD)
+// clang-format off
+const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM =
+    LAYOUT_split_3x6_3(
+        'L', 'L', 'L', 'L', 'L', 'L', /**/ 'R', 'R', 'R', 'R', 'R', 'R', 
+        'L', 'L', 'L', 'L', 'L', 'L', /**/ 'R', 'R', 'R', 'R', 'R', 'R', 
+        'L', 'L', 'L', 'L', 'L', 'L', /**/ 'R', 'R', 'R', 'R', 'R', 'R', 
+                       'L', 'L', 'L', /**/ 'R', 'R', 'R'
+    );
+// clang-format on 
+
+bool get_chordal_hold(uint16_t tap_hold_keycode, keyrecord_t* tap_hold_record,
+                      uint16_t other_keycode, keyrecord_t* other_record) {
+    // Exceptionally allow some one-handed chords for hotkeys.
+    switch (tap_hold_keycode) {
+        case LSFT_T(KC_ENT): return false;
+    }
+    // Otherwise defer to the opposite hands rule.
+    return get_chordal_hold_default(tap_hold_record, other_record);
+}
+#endif
+
+#if defined(FLOW_TAP_TERM)
+
 #endif
 
 #if defined(KEY_OVERRIDE_ENABLE)

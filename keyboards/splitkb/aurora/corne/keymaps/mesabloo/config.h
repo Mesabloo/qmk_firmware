@@ -4,8 +4,10 @@
 #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 #define TAPPING_TERM_PER_KEY
 #define RETRO_TAPPING_PER_KEY
+#define CHORDAL_HOLD
 
 #define TAPPING_TERM 170
+#define FLOW_TAP_TERM (TAPPING_TERM - 20)
 
 #if defined(OLED_ENABLE)
 #    if defined(OLED_FONT_H)
@@ -15,13 +17,13 @@
 #endif
 
 // Layers
-#define LAYER_ALPHA     0
-#define LAYER_NUM       1
-#define LAYER_SYMB      2
-#define LAYER_META      3
-#define LAYER_FN        4
-#define LAYER_GRV       5
-#define LAYER_ACC       6
+#define LAYER_ALPHA 0
+#define LAYER_NUM 1
+#define LAYER_SYMB 2
+#define LAYER_META 3
+#define LAYER_FN 4
+#define LAYER_GRV 5
+#define LAYER_ACC 6
 
 #define LAYER_UNDEFINED 15
 

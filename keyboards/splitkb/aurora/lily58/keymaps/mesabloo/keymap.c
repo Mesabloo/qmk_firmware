@@ -21,11 +21,11 @@ enum custom_keycodes {
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [LAYER_ALPHA] = LAYOUT(
-        XXXXXXX, XXXXXXX,      XXXXXXX,      XXXXXXX,      XXXXXXX,      XXXXXXX,           /**/          XXXXXXX,   XXXXXXX,         XXXXXXX,      XXXXXXX,      XXXXXXX,      XXXXXXX, 
-        XXXXXXX, FR_B,         FR_L,         FR_D,         FR_W,         FR_Z,              /**/          KC_ESC,    FR_F,            FR_O,         FR_U,         FR_J,         XXXXXXX,
-        XXXXXXX, LGUI_T(FR_N), LALT_T(FR_R), LSFT_T(FR_T), LCTL_T(FR_S), FR_G,              /**/          FR_Y,      LCTL_T(FR_H),    RSFT_T(FR_A), LALT_T(FR_E), RGUI_T(FR_I), XXXXXXX,
-        XXXXXXX, FR_Q,         FR_X,         FR_M,         FR_C,         FR_V,     XXXXXXX, /**/ TG_GAME, FR_K,      FR_P,            FR_COMM,      FR_SCLN,      FR_COLN,      XXXXXXX,
-                                             XXXXXXX,      MO(LAYER_FN), TAB_UPPR, KC_SPC,  /**/ LSFT_T(KC_ENT),  BSPC_LOWR, RALT_T(KC_RCTL), XXXXXXX
+        XXXXXXX, XXXXXXX,      XXXXXXX,      XXXXXXX,      XXXXXXX,      XXXXXXX,           /**/                 XXXXXXX,   XXXXXXX,         XXXXXXX,      XXXXXXX,      XXXXXXX,      XXXXXXX, 
+        XXXXXXX, FR_B,         FR_L,         FR_D,         FR_W,         FR_Z,              /**/                 KC_ESC,    FR_F,            FR_O,         FR_U,         FR_J,         XXXXXXX,
+        XXXXXXX, LGUI_T(FR_N), LALT_T(FR_R), LSFT_T(FR_T), LCTL_T(FR_S), FR_G,              /**/                 FR_Y,      LCTL_T(FR_H),    RSFT_T(FR_A), LALT_T(FR_E), RGUI_T(FR_I), XXXXXXX,
+        XXXXXXX, FR_Q,         FR_X,         FR_M,         FR_C,         FR_V,     XXXXXXX, /**/ TG_GAME,        FR_K,      FR_P,            FR_COMM,      FR_SCLN,      FR_COLN,      XXXXXXX,
+                                             XXXXXXX,      MO(LAYER_FN), TAB_UPPR, KC_SPC,  /**/ LSFT_T(KC_ENT), BSPC_LOWR, RALT_T(KC_RCTL), XXXXXXX
     ),
     [LAYER_GAME] = LAYOUT(
         XXXXXXX, FR_AMPR, FR_EACU, FR_DQUO,      FR_QUOT,         FR_LPRN,                    /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, 
@@ -220,10 +220,8 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
 #if defined(PERMISSIVE_HOLD_PER_KEY)
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        // case LSFT_T(KC_SPC):
-        // case LCTL_T(KC_ENT):
-        // case LALT_T(KC_ESC):
         case RALT_T(KC_LCTL):
+        case LSFT_T(KC_ENT):
             return true;
         default:
             return false;
@@ -281,7 +279,9 @@ bool get_chordal_hold(uint16_t tap_hold_keycode, keyrecord_t *tap_hold_record, u
     // Exceptionally allow some one-handed chords for hotkeys.
     switch (tap_hold_keycode) {
         case LSFT_T(KC_ENT):
-            return false;
+        case TAB_UPPR:
+        case BSPC_LOWR:
+            return true;
     }
     // Otherwise defer to the opposite hands rule.
     return get_chordal_hold_default(tap_hold_record, other_record);

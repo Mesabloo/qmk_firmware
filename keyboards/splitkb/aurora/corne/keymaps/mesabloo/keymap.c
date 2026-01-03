@@ -17,22 +17,27 @@ enum custom_keycodes {
     MT_QUOT,
 };
 
-#define BSPC_LOWR LT(LAYER_NUM, KC_BSPC)
-#define TAB_UPPR LT(LAYER_SYMB, KC_TAB)
+#ifdef TRI_LAYER_ENABLE
+#    define BSPC_LOWR LT(TRI_LAYER_LOWER_LAYER, KC_BSPC)
+#    define TAB_UPPR LT(TRI_LAYER_UPPER_LAYER, KC_TAB)
+#else
+#    define BSPC_LOWR LT(LAYER_NUM, KC_BSPC)
+#    define TAB_UPPR LT(LAYER_SYMB, KC_TAB)
+#endif
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [LAYER_ALPHA] = LAYOUT_split_3x6_3(
-        XXXXXXX, FR_B,         FR_L,         FR_D,         FR_W,         FR_Z,   /**/ KC_ESC, FR_F,         FR_O,            FR_U,         FR_J,         XXXXXXX,
-        XXXXXXX, LGUI_T(FR_N), LALT_T(FR_R), LSFT_T(FR_T), LCTL_T(FR_S), FR_G,   /**/ FR_Y,   LCTL_T(FR_H), RSFT_T(FR_A),    LALT_T(FR_E), RGUI_T(FR_I), XXXXXXX,
-        XXXXXXX, FR_Q,         FR_X,         FR_M,         FR_C,         FR_V,   /**/ FR_K,   FR_P,         FR_COMM,         FR_SCLN,      FR_COLN,      XXXXXXX,
+        XXXXXXX, FR_B,         FR_L,         FR_D,         FR_W,         FR_Z,   /**/ KC_ESC,         FR_F,         FR_O,           FR_U,         FR_J,         XXXXXXX,
+        XXXXXXX, LGUI_T(FR_N), LALT_T(FR_R), LSFT_T(FR_T), LCTL_T(FR_S), FR_G,   /**/ FR_Y,           LCTL_T(FR_H), RSFT_T(FR_A),   LALT_T(FR_E), RGUI_T(FR_I), XXXXXXX,
+        XXXXXXX, FR_Q,         FR_X,         FR_M,         FR_C,         FR_V,   /**/ FR_K,           FR_P,         FR_COMM,        FR_SCLN,      FR_COLN,      XXXXXXX,
                                              MO(LAYER_FN), TAB_UPPR,     KC_SPC, /**/ LSFT_T(KC_ENT), BSPC_LOWR,    RALT_T(KC_RCTL)
     ),
     [LAYER_NUM] = LAYOUT_split_3x6_3(
         XXXXXXX, XXXXXXX,         KC_P1,         KC_P2,         KC_P3,         XXXXXXX, /**/ XXXXXXX, XXXXXXX,         XXXXXXX,         XXXXXXX,       XXXXXXX,          XXXXXXX,
         XXXXXXX, LGUI_T(XXXXXXX), LALT_T(KC_P4), LSFT_T(KC_P5), LCTL_T(KC_P6), XXXXXXX, /**/ XXXXXXX, LCTL_T(KC_LEFT), RSFT_T(KC_DOWN), LALT_T(KC_UP), RGUI_T(KC_RIGHT), XXXXXXX,
         XXXXXXX, XXXXXXX,         KC_P7,         KC_P8,         KC_P9,         KC_P0,   /**/ XXXXXXX, KC_HOME,         KC_PGDN,         KC_PGUP,       KC_END,           XXXXXXX,
-                                                 _______,       _______,       _______, /**/ _______,  _______, _______
+                                                 _______,       _______,       _______, /**/ _______, _______,         _______
     ),
     [LAYER_SYMB] = LAYOUT_split_3x6_3(
         XXXXXXX, FR_EXLM,         FR_AT,           FR_HASH,         FR_DLR,          FR_PERC, /**/ FR_CART, FR_AMPR,        FR_LPRN,         FR_RPRN,         FR_ASTR,         XXXXXXX,
@@ -50,7 +55,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         XXXXXXX, KC_F1,   KC_F2,   KC_F3,   KC_F4,   XXXXXXX, /**/ XXXXXXX, KC_PSCR,         XXXXXXX,         XXXXXXX,         XXXXXXX,         KC_CAPS,
         XXXXXXX, KC_F5,   KC_F6,   KC_F7,   KC_F8,   XXXXXXX, /**/ XXXXXXX, LCTL_T(XXXXXXX), RSFT_T(XXXXXXX), LALT_T(XXXXXXX), RGUI_T(XXXXXXX), KC_NUM,
         XXXXXXX, KC_F9,   KC_F10,  KC_F11,  KC_F12,  XXXXXXX, /**/ XXXXXXX, KC_MUTE,         KC_VOLD,         KC_VOLU,         _______,         XXXXXXX,
-                                   _______, XXXXXXX, _______, /**/ _______, MO(LAYER_META),  _______
+                                   _______, XXXXXXX, _______, /**/ _______, XXXXXXX,         _______
     ),
     [LAYER_GRV] = LAYOUT_split_3x6_3(
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, /**/ XXXXXXX, XXXXXXX, XXXXXXX, FR_UGRV, XXXXXXX, XXXXXXX,
@@ -69,12 +74,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
+#ifndef TRI_LAYER_ENABLE
         case BSPC_LOWR:
             layer_off(LAYER_SYMB);
             return true;
         case TAB_UPPR:
             layer_off(LAYER_NUM);
             return true;
+#endif
         case LALT_T(MT_DIAE):
             if (record->tap.count && record->event.pressed) {
                 tap_code16(FR_DIAE);
@@ -124,6 +131,15 @@ void post_process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef CONSOLE_ENABLE
     uprintf("kc: 0x%04X, col: %2u, row: %2u, pressed: %u, time: %5u, int: %u, count: %u\n", keycode, record->event.key.col, record->event.key.row, record->event.pressed, record->event.time, record->tap.interrupted, record->tap.count);
 #endif
+
+    switch (keycode) {
+        case TAB_UPPR:
+        case BSPC_LOWR:
+#ifdef TRI_LAYER_ENABLE
+            update_tri_layer(TRI_LAYER_LOWER_LAYER, TRI_LAYER_UPPER_LAYER, TRI_LAYER_ADJUST_LAYER);
+#endif
+            break;
+    }
 }
 
 void keyboard_pre_init_user(void) {
@@ -210,6 +226,18 @@ bool get_chordal_hold(uint16_t tap_hold_keycode, keyrecord_t* tap_hold_record,
 
 #if defined(FLOW_TAP_TERM)
 
+#endif
+
+#if defined(SPECULATIVE_HOLD)
+// bool get_speculative_hold(uint16_t keycode, keyrecord_t* record) {
+//     switch (keycode) { // These keys may be speculatively held.
+//         case LCTL_T(KC_ESC):
+//         case LSFT_T(KC_ENT):
+//         case RSFT_T(KC_SLSH):
+//             return true;
+//     }
+//     return false; // Disable otherwise.
+// }
 #endif
 
 #if defined(KEY_OVERRIDE_ENABLE)

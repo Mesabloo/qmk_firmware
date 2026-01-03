@@ -1,6 +1,10 @@
 #include QMK_KEYBOARD_H
 #include "keymap_extras/keymap_french.h"
 
+#ifdef CONSOLE_ENABLE
+#    include "print.h"
+#endif
+
 // A few extras french keycodes
 #define FR_CART ALGR(FR_CCED)
 ////////////////////////////
@@ -15,8 +19,8 @@ enum custom_keycodes {
     MT_QUOT,
 };
 
-#define BSPC_LOWR LT(LAYER_UNDEFINED, KC_BSPC)
-#define TAB_UPPR LT(LAYER_UNDEFINED, KC_TAB)
+#define BSPC_LOWR LT(LAYER_NUM, KC_BSPC)
+#define TAB_UPPR LT(LAYER_SYMB, KC_TAB)
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -60,14 +64,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         XXXXXXX, QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          /**/          DT_PRNT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
         XXXXXXX, UG_TOGG, UG_HUEU, UG_SATU, UG_VALU, XXXXXXX,          /**/          DT_DOWN, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
         XXXXXXX, XXXXXXX, UG_HUED, UG_SATD, UG_VALD, XXXXXXX, XXXXXXX, /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-                                   XXXXXXX, XXXXXXX, _______, XXXXXXX, /**/ XXXXXXX, _______, XXXXXXX, XXXXXXX
+                                   XXXXXXX, _______, XXXXXXX, XXXXXXX, /**/ XXXXXXX, _______, XXXXXXX, XXXXXXX
     ),
     [LAYER_FN] = LAYOUT(
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          /**/          XXXXXXX, XXXXXXX,         XXXXXXX,         XXXXXXX,         XXXXXXX,         XXXXXXX, 
-        XXXXXXX, KC_F1,   KC_F2,   KC_F3,   KC_F4,   XXXXXXX,          /**/          XXXXXXX, KC_PSCR,         XXXXXXX,         XXXXXXX,         XXXXXXX,         KC_CAPS,
-        XXXXXXX, KC_F5,   KC_F6,   KC_F7,   KC_F8,   XXXXXXX,          /**/          XXXXXXX, LCTL_T(XXXXXXX), RSFT_T(XXXXXXX), LALT_T(XXXXXXX), RGUI_T(XXXXXXX), KC_NUM,
-        XXXXXXX, KC_F9,   KC_F10,  KC_F11,  KC_F12,  XXXXXXX, XXXXXXX, /**/ XXXXXXX, XXXXXXX, KC_MUTE,         KC_VOLD,         KC_VOLU,         XXXXXXX,         XXXXXXX,
-                                   _______, _______, XXXXXXX, _______, /**/ _______, XXXXXXX, _______,         XXXXXXX
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          /**/          XXXXXXX,        XXXXXXX,         XXXXXXX,         XXXXXXX,         XXXXXXX,         XXXXXXX, 
+        XXXXXXX, KC_F1,   KC_F2,   KC_F3,   KC_F4,   XXXXXXX,          /**/          XXXXXXX,        KC_PSCR,         XXXXXXX,         XXXXXXX,         XXXXXXX,         KC_CAPS,
+        XXXXXXX, KC_F5,   KC_F6,   KC_F7,   KC_F8,   XXXXXXX,          /**/          XXXXXXX,        LCTL_T(XXXXXXX), RSFT_T(XXXXXXX), LALT_T(XXXXXXX), RGUI_T(XXXXXXX), KC_NUM,
+        XXXXXXX, KC_F9,   KC_F10,  KC_F11,  KC_F12,  XXXXXXX, XXXXXXX, /**/ XXXXXXX, XXXXXXX,        KC_MUTE,         KC_VOLD,         KC_VOLU,         XXXXXXX,         XXXXXXX,
+                                   _______, _______, XXXXXXX, _______, /**/ _______, MO(LAYER_META), _______,         XXXXXXX
     ),
     [LAYER_GRV] = LAYOUT(
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, 
@@ -86,66 +90,46 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 // clang-format on
 
-static bool in_game_layer = false;
+// static bool in_game_layer = false;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case BSPC_LOWR:
-            if (!record->tap.count) {
-                if (record->event.pressed) {
-                    // Started holding
-                    layer_on(TRI_LAYER_LOWER_LAYER);
-                } else {
-                    // Stopped holding
-                    layer_off(TRI_LAYER_LOWER_LAYER);
-                }
-                update_tri_layer(TRI_LAYER_LOWER_LAYER, TRI_LAYER_UPPER_LAYER, TRI_LAYER_ADJUST_LAYER);
-                return false;
-            }
+            layer_off(LAYER_SYMB);
             return true;
         case TAB_UPPR:
-            if (!record->tap.count) {
-                if (record->event.pressed) {
-                    // Started holding
-                    layer_on(TRI_LAYER_UPPER_LAYER);
-                } else {
-                    // Stopped holding
-                    layer_off(TRI_LAYER_UPPER_LAYER);
-                }
-                update_tri_layer(TRI_LAYER_LOWER_LAYER, TRI_LAYER_UPPER_LAYER, TRI_LAYER_ADJUST_LAYER);
-                return false;
-            }
+            layer_off(LAYER_NUM);
             return true;
         case TG_GAME:
             if (record->event.pressed) {
-                if (layer_state_is(LAYER_GAME) || layer_state_is(LAYER_GAME_ALT)) {
+                if (IS_LAYER_ON(LAYER_GAME) || IS_LAYER_ON(LAYER_GAME_ALT)) {
                     // Switch NKRO off
                     clear_keyboard(); // clear first buffer to prevent stuck keys
                     keymap_config.nkro = false;
                     layer_off(LAYER_GAME);
-                    in_game_layer = false;
+                    // in_game_layer = false;
                 } else {
                     // Switch N-Key RollOver on only on the gaming layer
                     clear_keyboard(); // clear first buffer to prevent stuck keys
                     keymap_config.nkro = true;
                     layer_on(LAYER_GAME);
-                    in_game_layer = true;
+                    // in_game_layer = true;
                 }
                 return false;
             }
             return true;
         case GAME_ENT:
-            if (record->event.pressed && in_game_layer) {
-                if (layer_state_is(LAYER_GAME) || layer_state_is(LAYER_GAME_ALT)) {
+            if (record->event.pressed) {
+                if (IS_LAYER_ON(LAYER_GAME) || IS_LAYER_ON(LAYER_GAME_ALT)) {
                     // Switch NKRO off
                     clear_keyboard(); // clear first buffer to prevent stuck keys
                     keymap_config.nkro = false;
                     layer_off(LAYER_GAME);
                     // Then press the ENTER key
-                    tap_code(KC_ENT);
+                    // tap_code(KC_ENT);
                 } else {
                     // Press the ENTER key
-                    tap_code(KC_ENT);
+                    // tap_code(KC_ENT);
                     // Switch N-Key RollOver on only on the gaming layer
                     clear_keyboard(); // clear first buffer to prevent stuck keys
                     keymap_config.nkro = true;
@@ -199,6 +183,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
+void post_process_record_user(uint16_t keycode, keyrecord_t *record) {
+#ifdef CONSOLE_ENABLE
+    uprintf("kc: 0x%04X, col: %2u, row: %2u, pressed: %u, time: %5u, int: %u, count: %u\n", keycode, record->event.key.col, record->event.key.row, record->event.pressed, record->event.time, record->tap.interrupted, record->tap.count);
+#endif
+}
+
 void keyboard_pre_init_user(void) {
     // Set our LED pin as output
     setPinOutput(24);
@@ -222,6 +212,8 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case RALT_T(KC_LCTL):
         case LSFT_T(KC_ENT):
+        case BSPC_LOWR:
+        case TAB_UPPR:
             return true;
         default:
             return false;
@@ -270,26 +262,35 @@ const char PROGMEM chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] =
         'L', 'L', 'L', 'L', 'L', 'L',      /**/      'R', 'R', 'R', 'R', 'R', 'R',
         'L', 'L', 'L', 'L', 'L', 'L',      /**/      'R', 'R', 'R', 'R', 'R', 'R',
         'L', 'L', 'L', 'L', 'L', 'L',      /**/      'R', 'R', 'R', 'R', 'R', 'R',
-        'L', 'L', 'L', 'L', 'L', 'L', 'L', /**/ 'R', 'R', 'R', 'R', 'R', 'R', 'R',
-                       'L', 'L', 'L', 'L', /**/ 'R', 'R', 'R', 'R'
+        'L', 'L', 'L', 'L', 'L', 'L', '*', /**/ '*', 'R', 'R', 'R', 'R', 'R', 'R',
+                       '*', '*', '*', '*', /**/ '*', '*', '*', '*'
     );
 // clang-format on
 
 bool get_chordal_hold(uint16_t tap_hold_keycode, keyrecord_t *tap_hold_record, uint16_t other_keycode, keyrecord_t *other_record) {
-    // Exceptionally allow some one-handed chords for hotkeys.
-    switch (tap_hold_keycode) {
-        case LSFT_T(KC_ENT):
-        case TAB_UPPR:
-        case BSPC_LOWR:
-            return true;
+    // Only allow chordal holds on the ALPHA layer
+    if (!IS_LAYER_ON(LAYER_ALPHA)) {
+        return true;
     }
-    // Otherwise defer to the opposite hands rule.
+
     return get_chordal_hold_default(tap_hold_record, other_record);
 }
 #endif
 
 #if defined(FLOW_TAP_TERM)
 
+#endif
+
+#if defined(SPECULATIVE_HOLD)
+// bool get_speculative_hold(uint16_t keycode, keyrecord_t* record) {
+//     switch (keycode) { // These keys may be speculatively held.
+//         case LCTL_T(KC_ESC):
+//         case LSFT_T(KC_ENT):
+//         case RSFT_T(KC_SLSH):
+//             return true;
+//     }
+//     return false; // Disable otherwise.
+// }
 #endif
 
 #if defined(KEY_OVERRIDE_ENABLE)
@@ -393,27 +394,27 @@ static void render_flower(void) {
     };
     // clang-format on
 
-    if (layer_state_is(LAYER_ALPHA) || layer_state_is(LAYER_ACC) || layer_state_is(LAYER_GRV)) {
+    if (IS_LAYER_ON(LAYER_ALPHA) || IS_LAYER_ON(LAYER_ACC) || IS_LAYER_ON(LAYER_GRV)) {
         oled_write_P(flower1, false);
         // render_space();
         // oled_write_P(" let ", false);
-    } else if (layer_state_is(LAYER_META)) {
+    } else if (IS_LAYER_ON(LAYER_META)) {
         oled_write_P(flower5, false);
         // render_space();
         // oled_write_P(" sys ", false);
-    } else if (layer_state_is(LAYER_NUM)) {
+    } else if (IS_LAYER_ON(LAYER_NUM)) {
         oled_write_P(flower2, false);
         // render_space();
         // oled_write_P(" num ", false);
-    } else if (layer_state_is(LAYER_SYMB)) {
+    } else if (IS_LAYER_ON(LAYER_SYMB)) {
         oled_write_P(flower3, false);
         // render_space();
         // oled_write_P(" sym ", false);
-    } else if (layer_state_is(LAYER_FN)) {
+    } else if (IS_LAYER_ON(LAYER_FN)) {
         oled_write_P(flower4, false);
         // render_space();
         // oled_write_P(" fun ", false);
-    } else if (layer_state_is(LAYER_GAME) || layer_state_is(LAYER_GAME_ALT)) {
+    } else if (IS_LAYER_ON(LAYER_GAME) || IS_LAYER_ON(LAYER_GAME_ALT)) {
         oled_write_P(flower6, false);
     } else {
         oled_write_P(flower7, false);

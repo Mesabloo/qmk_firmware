@@ -19,8 +19,13 @@ enum custom_keycodes {
     MT_QUOT,
 };
 
-#define BSPC_LOWR LT(LAYER_NUM, KC_BSPC)
-#define TAB_UPPR LT(LAYER_SYMB, KC_TAB)
+#ifdef TRI_LAYER_ENABLE
+#    define BSPC_LOWR LT(TRI_LAYER_LOWER_LAYER, KC_BSPC)
+#    define TAB_UPPR LT(TRI_LAYER_UPPER_LAYER, KC_TAB)
+#else
+#    define BSPC_LOWR LT(LAYER_NUM, KC_BSPC)
+#    define TAB_UPPR LT(LAYER_SYMB, KC_TAB)
+#endif
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -53,11 +58,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                  XXXXXXX,       _______,       _______, _______, /**/ _______, _______, _______, XXXXXXX
     ),
     [LAYER_SYMB] = LAYOUT(
-        XXXXXXX, XXXXXXX,         XXXXXXX,         XXXXXXX,         XXXXXXX,         XXXXXXX,                 /**/          XXXXXXX, XXXXXXX,        XXXXXXX,         XXXXXXX,         XXXXXXX,         XXXXXXX, 
-        XXXXXXX, FR_EXLM,         FR_AT,           FR_HASH,         FR_DLR,          FR_PERC,                 /**/          FR_CART, FR_AMPR,        FR_LPRN,         FR_RPRN,         FR_ASTR,         XXXXXXX,
-        XXXXXXX, LGUI_T(FR_LABK), LALT_T(MT_DIAE), LSFT_T(FR_CIRC), LCTL_T(MT_QUOT), FR_TILD,                 /**/          FR_MINS, LCTL_T(FR_EQL), RSFT_T(MT_LBRC), LALT_T(MT_RBRC), RGUI_T(MT_BSLS), XXXXXXX,
-        XXXXXXX, XXXXXXX,         OSL(LAYER_ACC),  OSL(LAYER_GRV),  FR_CCED,         FR_GRV,         XXXXXXX, /**/ XXXXXXX, FR_UNDS, FR_PLUS,        FR_LCBR,         FR_RCBR,         FR_PIPE,         XXXXXXX,
-                                                   XXXXXXX,         _______,         _______,        _______, /**/ _______, _______, _______,        XXXXXXX
+        XXXXXXX, XXXXXXX,         XXXXXXX,         XXXXXXX,         XXXXXXX,         XXXXXXX,          /**/          XXXXXXX, XXXXXXX,        XXXXXXX,         XXXXXXX,         XXXXXXX,         XXXXXXX, 
+        XXXXXXX, FR_EXLM,         FR_AT,           FR_HASH,         FR_DLR,          FR_PERC,          /**/          FR_CART, FR_AMPR,        FR_LPRN,         FR_RPRN,         FR_ASTR,         XXXXXXX,
+        XXXXXXX, LGUI_T(FR_LABK), LALT_T(MT_DIAE), LSFT_T(FR_CIRC), LCTL_T(MT_QUOT), FR_TILD,          /**/          FR_MINS, LCTL_T(FR_EQL), RSFT_T(MT_LBRC), LALT_T(MT_RBRC), RGUI_T(MT_BSLS), XXXXXXX,
+        XXXXXXX, XXXXXXX,         OSL(LAYER_ACC),  OSL(LAYER_GRV),  FR_CCED,         FR_GRV,  XXXXXXX, /**/ XXXXXXX, FR_UNDS, FR_PLUS,        FR_LCBR,         FR_RCBR,         FR_PIPE,         XXXXXXX,
+                                                   XXXXXXX,         _______,         _______, _______, /**/ _______, _______, _______,        XXXXXXX
     ),
     [LAYER_META] = LAYOUT(
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          /**/          DT_UP,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, 
@@ -67,11 +72,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                    XXXXXXX, _______, XXXXXXX, XXXXXXX, /**/ XXXXXXX, _______, XXXXXXX, XXXXXXX
     ),
     [LAYER_FN] = LAYOUT(
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          /**/          XXXXXXX,        XXXXXXX,         XXXXXXX,         XXXXXXX,         XXXXXXX,         XXXXXXX, 
-        XXXXXXX, KC_F1,   KC_F2,   KC_F3,   KC_F4,   XXXXXXX,          /**/          XXXXXXX,        KC_PSCR,         XXXXXXX,         XXXXXXX,         XXXXXXX,         KC_CAPS,
-        XXXXXXX, KC_F5,   KC_F6,   KC_F7,   KC_F8,   XXXXXXX,          /**/          XXXXXXX,        LCTL_T(XXXXXXX), RSFT_T(XXXXXXX), LALT_T(XXXXXXX), RGUI_T(XXXXXXX), KC_NUM,
-        XXXXXXX, KC_F9,   KC_F10,  KC_F11,  KC_F12,  XXXXXXX, XXXXXXX, /**/ XXXXXXX, XXXXXXX,        KC_MUTE,         KC_VOLD,         KC_VOLU,         XXXXXXX,         XXXXXXX,
-                                   _______, _______, XXXXXXX, _______, /**/ _______, MO(LAYER_META), _______,         XXXXXXX
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          /**/          XXXXXXX, XXXXXXX,         XXXXXXX,         XXXXXXX,         XXXXXXX,         XXXXXXX, 
+        XXXXXXX, KC_F1,   KC_F2,   KC_F3,   KC_F4,   XXXXXXX,          /**/          XXXXXXX, KC_PSCR,         XXXXXXX,         XXXXXXX,         XXXXXXX,         KC_CAPS,
+        XXXXXXX, KC_F5,   KC_F6,   KC_F7,   KC_F8,   XXXXXXX,          /**/          XXXXXXX, LCTL_T(XXXXXXX), RSFT_T(XXXXXXX), LALT_T(XXXXXXX), RGUI_T(XXXXXXX), KC_NUM,
+        XXXXXXX, KC_F9,   KC_F10,  KC_F11,  KC_F12,  XXXXXXX, XXXXXXX, /**/ XXXXXXX, XXXXXXX, KC_MUTE,         KC_VOLD,         KC_VOLU,         XXXXXXX,         XXXXXXX,
+                                   _______, _______, XXXXXXX, _______, /**/ _______, XXXXXXX, _______,         XXXXXXX
     ),
     [LAYER_GRV] = LAYOUT(
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, 
@@ -94,12 +99,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
+#ifndef TRI_LAYER_ENABLE
         case BSPC_LOWR:
             layer_off(LAYER_SYMB);
             return true;
         case TAB_UPPR:
             layer_off(LAYER_NUM);
             return true;
+#endif
         case TG_GAME:
             if (record->event.pressed) {
                 if (IS_LAYER_ON(LAYER_GAME) || IS_LAYER_ON(LAYER_GAME_ALT)) {
@@ -187,6 +194,15 @@ void post_process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef CONSOLE_ENABLE
     uprintf("kc: 0x%04X, col: %2u, row: %2u, pressed: %u, time: %5u, int: %u, count: %u\n", keycode, record->event.key.col, record->event.key.row, record->event.pressed, record->event.time, record->tap.interrupted, record->tap.count);
 #endif
+
+    switch (keycode) {
+        case TAB_UPPR:
+        case BSPC_LOWR:
+#ifdef TRI_LAYER_ENABLE
+            update_tri_layer(TRI_LAYER_LOWER_LAYER, TRI_LAYER_UPPER_LAYER, TRI_LAYER_ADJUST_LAYER);
+#endif
+            break;
+    }
 }
 
 void keyboard_pre_init_user(void) {
@@ -212,8 +228,6 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case RALT_T(KC_LCTL):
         case LSFT_T(KC_ENT):
-        case BSPC_LOWR:
-        case TAB_UPPR:
             return true;
         default:
             return false;

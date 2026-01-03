@@ -16,7 +16,7 @@ KEY_OVERRIDE_ENABLE = yes
 
 DYNAMIC_TAPPING_TERM_ENABLE = no
 
-TRI_LAYER_ENABLE = no
+TRI_LAYER_ENABLE = yes 
 
 # Enable N-key rollover
 NKRO_ENABLE = yes

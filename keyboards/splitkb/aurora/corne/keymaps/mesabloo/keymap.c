@@ -220,6 +220,22 @@ bool get_chordal_hold(uint16_t tap_hold_keycode, keyrecord_t* tap_hold_record,
         return true;
     }
 
+    // Allow s-C, s-V, C-C, C-V on the same hand
+    switch (tap_hold_keycode) {
+        case LGUI_T(FR_N):
+        case LGUI_T(XXXXXXX):
+        case LGUI_T(FR_LABK):
+        case LCTL_T(FR_S):
+        case LCTL_T(KC_P6):
+        case LCTL_T(MT_QUOT):
+            switch (other_keycode){
+                case FR_C:
+                case FR_V:
+                    return true;
+            }
+            break;
+    }
+
     return get_chordal_hold_default(tap_hold_record, other_record);
 }
 #endif

@@ -8,7 +8,7 @@
 #define SPECULATIVE_HOLD
 
 #define TAPPING_TERM 170
-#define FLOW_TAP_TERM (TAPPING_TERM - 20)
+// #define FLOW_TAP_TERM (TAPPING_TERM - 20)
 
 #if defined(OLED_ENABLE)
 #    if defined(OLED_FONT_H)

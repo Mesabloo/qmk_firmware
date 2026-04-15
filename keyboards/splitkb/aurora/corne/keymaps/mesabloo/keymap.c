@@ -234,6 +234,8 @@ bool get_chordal_hold(uint16_t tap_hold_keycode, keyrecord_t* tap_hold_record,
                     return true;
             }
             break;
+        case LSFT_T(KC_ENT):
+            return true;
     }
 
     return get_chordal_hold_default(tap_hold_record, other_record);

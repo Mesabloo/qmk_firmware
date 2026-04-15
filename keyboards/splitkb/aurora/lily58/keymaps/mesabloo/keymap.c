@@ -37,16 +37,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                              XXXXXXX,      MO(LAYER_FN), TAB_UPPR, KC_SPC,  /**/ LSFT_T(KC_ENT), BSPC_LOWR, RALT_T(KC_RCTL), XXXXXXX
     ),
     [LAYER_GAME] = LAYOUT(
-        XXXXXXX, FR_AMPR, FR_EACU, FR_DQUO,      FR_QUOT,         FR_LPRN,                    /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, 
-        KC_TAB,  FR_COMM, FR_A,    FR_Z,         FR_E,            FR_R,                       /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        KC_LSFT, FR_O,    FR_Q,    FR_S,         FR_D,            FR_F,                       /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        KC_LCTL, FR_Y,    FR_X,    FR_C,         FR_G,            FR_B,               KC_ENT, /**/ TG_GAME, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-                                   MO(LAYER_FN), LALT_T(KC_LGUI), MO(LAYER_GAME_ALT), KC_SPC, /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
+        XXXXXXX, FR_AMPR, FR_EACU, FR_DQUO,      FR_QUOT, FR_LPRN,                    /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, 
+        KC_TAB,  FR_COMM, FR_A,    FR_Z,         FR_E,    FR_R,                       /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        KC_LSFT, FR_O,    FR_Q,    FR_S,         FR_D,    FR_F,                       /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        KC_LCTL, FR_Y,    FR_X,    FR_C,         FR_G,    FR_B,               KC_ENT, /**/ TG_GAME, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+                                   MO(LAYER_FN), KC_LALT, MO(LAYER_GAME_ALT), KC_SPC, /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
     ),
     [LAYER_GAME_ALT] = LAYOUT(
         XXXXXXX, FR_MINS, FR_EGRV, FR_UNDS, FR_CCED, FR_AGRV,          /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
         KC_ESC,  FR_M,    FR_W,    _______, FR_I,    KC_BSPC,          /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        _______, XXXXXXX, _______, _______, _______, FR_T,             /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        _______, FR_K,    _______, _______, _______, FR_T,             /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
         _______, FR_L,    FR_N,    FR_V,    FR_H,    FR_J,    _______, /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                                    _______, _______, _______, _______, /**/ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
     ),
@@ -301,6 +301,8 @@ bool get_chordal_hold(uint16_t tap_hold_keycode, keyrecord_t *tap_hold_record, u
                     return true;
             }
             break;
+        case LSFT_T(KC_ENT):
+            return true;
     }
 
     return get_chordal_hold_default(tap_hold_record, other_record);

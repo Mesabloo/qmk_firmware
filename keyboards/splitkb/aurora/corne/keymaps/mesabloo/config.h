@@ -7,7 +7,7 @@
 #define CHORDAL_HOLD
 #define SPECULATIVE_HOLD
 
-#define TAPPING_TERM 170
+#define TAPPING_TERM 200 // 170
 // #define FLOW_TAP_TERM (TAPPING_TERM - 20)
 
 #if defined(OLED_ENABLE)

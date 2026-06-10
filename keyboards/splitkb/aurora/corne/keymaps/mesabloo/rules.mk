@@ -12,7 +12,7 @@ CONVERT_TO = liatris
 # Enable key overrides
 KEY_OVERRIDE_ENABLE = yes
 
-DYNAMIC_TAPPING_TERM_ENABLE = no
+DYNAMIC_TAPPING_TERM_ENABLE = yes
 
 # TAP_DANCE_ENABLE = yes
 

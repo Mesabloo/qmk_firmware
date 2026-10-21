@@ -30,11 +30,11 @@ enum custom_keycodes {
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [LAYER_ALPHA] = LAYOUT(
-        XXXXXXX, XXXXXXX,      XXXXXXX,      XXXXXXX,      XXXXXXX,      XXXXXXX,           /**/                 XXXXXXX,   XXXXXXX,         XXXXXXX,      XXXXXXX,      XXXXXXX,      XXXXXXX, 
-        XXXXXXX, FR_B,         FR_L,         FR_D,         FR_W,         FR_Z,              /**/                 KC_ESC,    FR_F,            FR_O,         FR_U,         FR_J,         XXXXXXX,
-        XXXXXXX, LGUI_T(FR_N), LALT_T(FR_R), LSFT_T(FR_T), LCTL_T(FR_S), FR_G,              /**/                 FR_Y,      LCTL_T(FR_H),    RSFT_T(FR_A), LALT_T(FR_E), RGUI_T(FR_I), XXXXXXX,
-        XXXXXXX, FR_Q,         FR_X,         FR_M,         FR_C,         FR_V,     XXXXXXX, /**/ TG_GAME,        FR_K,      FR_P,            FR_COMM,      FR_SCLN,      FR_COLN,      XXXXXXX,
-                                             XXXXXXX,      MO(LAYER_FN), TAB_UPPR, KC_SPC,  /**/ LSFT_T(KC_ENT), BSPC_LOWR, RALT_T(KC_RCTL), XXXXXXX
+        XXXXXXX, XXXXXXX,      XXXXXXX,      XXXXXXX,      XXXXXXX,      XXXXXXX,                /**/                 XXXXXXX,   XXXXXXX,         XXXXXXX,      XXXXXXX,      XXXXXXX,      XXXXXXX,
+        XXXXXXX, FR_B,         FR_L,         FR_D,         FR_W,         FR_Z,                   /**/                 KC_ESC,    FR_F,            FR_O,         FR_U,         FR_J,         XXXXXXX,
+        XXXXXXX, LGUI_T(FR_N), LALT_T(FR_R), LSFT_T(FR_T), LCTL_T(FR_S), FR_G,                   /**/                 FR_Y,      LCTL_T(FR_H),    RSFT_T(FR_A), LALT_T(FR_E), RGUI_T(FR_I), XXXXXXX,
+        XXXXXXX, FR_Q,         FR_X,         FR_M,         FR_C,         FR_V,     XXXXXXX,      /**/ TG_GAME,        FR_K,      FR_P,            FR_COMM,      FR_SCLN,      FR_COLN,      XXXXXXX,
+                                             XXXXXXX,      MO(LAYER_FN), TAB_UPPR, SH_T(KC_SPC), /**/ LSFT_T(KC_ENT), BSPC_LOWR, RALT_T(KC_RCTL), XXXXXXX
     ),
     [LAYER_GAME] = LAYOUT(
         XXXXXXX, FR_AMPR, FR_EACU, FR_DQUO,      FR_QUOT, FR_LPRN,                    /**/          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, 
@@ -61,7 +61,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         XXXXXXX, XXXXXXX,         XXXXXXX,         XXXXXXX,         XXXXXXX,         XXXXXXX,          /**/          XXXXXXX, XXXXXXX,        XXXXXXX,         XXXXXXX,         XXXXXXX,         XXXXXXX, 
         XXXXXXX, FR_EXLM,         FR_AT,           FR_HASH,         FR_DLR,          FR_PERC,          /**/          FR_CART, FR_AMPR,        FR_LPRN,         FR_RPRN,         FR_ASTR,         XXXXXXX,
         XXXXXXX, LGUI_T(FR_LABK), LALT_T(MT_DIAE), LSFT_T(FR_CIRC), LCTL_T(MT_QUOT), FR_TILD,          /**/          FR_MINS, LCTL_T(FR_EQL), RSFT_T(MT_LBRC), LALT_T(MT_RBRC), RGUI_T(MT_BSLS), XXXXXXX,
-        XXXXXXX, XXXXXXX,         OSL(LAYER_ACC),  OSL(LAYER_GRV),  FR_CCED,         FR_GRV,  XXXXXXX, /**/ XXXXXXX, FR_UNDS, FR_PLUS,        FR_LCBR,         FR_RCBR,         FR_PIPE,         XXXXXXX,
+        XXXXXXX, KC_GRAVE,        OSL(LAYER_ACC),  OSL(LAYER_GRV),  FR_CCED,         FR_GRV,  XXXXXXX, /**/ XXXXXXX, FR_UNDS, FR_PLUS,        FR_LCBR,         FR_RCBR,         FR_PIPE,         XXXXXXX,
                                                    XXXXXXX,         _______,         _______, _______, /**/ _______, _______, _______,        XXXXXXX
     ),
     [LAYER_META] = LAYOUT(
@@ -93,6 +93,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                    XXXXXXX, _______, XXXXXXX, _______, /**/ _______, XXXXXXX, _______, XXXXXXX
     )
 };
+
+/* #ifdef SWAP_HANDS_ENABLE */
+/* const keypos_t PROGMEM hand_swap_config[MATRIX_ROWS][MATRIX_COLS] = { */
+/*   {{11, 0}, {10, 0}, {9, 0}, {8, 0}, {7, 0}, {6, 0}, {5, 0}, {4, 0}, {3, 0}, {2, 0}, {1, 0}, {0, 0}}, */
+/*   {{11, 1}, {10, 1}, {9, 1}, {8, 1}, {7, 1}, {6, 1}, {5, 1}, {4, 1}, {3, 1}, {2, 1}, {1, 1}, {0, 1}}, */
+/*   {{13, 2}, {12, 2}, {11, 2}, {10, 2}, {9, 2}, {8, 2}, {7, 2}, {6, 2}, {5, 2}, {4, 2}, {3, 2}, {2, 2}, {1, 2}, {0, 2}}, */
+/*   {{7, 3}, {6, 3}, {5, 3}, {4, 3}, {3, 3}, {2, 3}, {1, 3}, {0, 3}}, */
+/* }; */
+/* #endif */
 // clang-format on
 
 // static bool in_game_layer = false;

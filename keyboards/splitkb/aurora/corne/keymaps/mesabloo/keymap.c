@@ -28,10 +28,10 @@ enum custom_keycodes {
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [LAYER_ALPHA] = LAYOUT_split_3x6_3(
-        XXXXXXX, FR_B,         FR_L,         FR_D,         FR_W,         FR_Z,   /**/ KC_ESC,         FR_F,         FR_O,           FR_U,         FR_J,         XXXXXXX,
-        XXXXXXX, LGUI_T(FR_N), LALT_T(FR_R), LSFT_T(FR_T), LCTL_T(FR_S), FR_G,   /**/ FR_Y,           LCTL_T(FR_H), RSFT_T(FR_A),   LALT_T(FR_E), RGUI_T(FR_I), XXXXXXX,
-        XXXXXXX, FR_Q,         FR_X,         FR_M,         FR_C,         FR_V,   /**/ FR_K,           FR_P,         FR_COMM,        FR_SCLN,      FR_COLN,      XXXXXXX,
-                                             MO(LAYER_FN), TAB_UPPR,     KC_SPC, /**/ LSFT_T(KC_ENT), BSPC_LOWR,    RALT_T(KC_RCTL)
+        XXXXXXX, FR_B,         FR_L,         FR_D,         FR_W,         FR_Z,         /**/ KC_ESC,         FR_F,         FR_O,           FR_U,         FR_J,         XXXXXXX,
+        XXXXXXX, LGUI_T(FR_N), LALT_T(FR_R), LSFT_T(FR_T), LCTL_T(FR_S), FR_G,         /**/ FR_Y,           LCTL_T(FR_H), RSFT_T(FR_A),   LALT_T(FR_E), RGUI_T(FR_I), XXXXXXX,
+        XXXXXXX, FR_Q,         FR_X,         FR_M,         FR_C,         FR_V,         /**/ FR_K,           FR_P,         FR_COMM,        FR_SCLN,      FR_COLN,      XXXXXXX,
+                                             MO(LAYER_FN), TAB_UPPR,     SH_T(KC_SPC), /**/ LSFT_T(KC_ENT), BSPC_LOWR,    RALT_T(KC_RCTL)
     ),
     [LAYER_NUM] = LAYOUT_split_3x6_3(
         XXXXXXX, XXXXXXX,         KC_P1,         KC_P2,         KC_P3,         XXXXXXX, /**/ XXXXXXX, XXXXXXX,         XXXXXXX,         XXXXXXX,       XXXXXXX,          XXXXXXX,
@@ -70,6 +70,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                    _______, XXXXXXX, _______, /**/ _______, XXXXXXX, _______
     )
 };
+
+/* #ifdef SWAP_HANDS_ENABLE */
+/* const keypos_t PROGMEM hand_swap_config[MATRIX_ROWS][MATRIX_COLS] = { */
+/*   {{11, 0}, {10, 0}, {9, 0}, {8, 0}, {7, 0}, {6, 0}, {5, 0}, {4, 0}, {3, 0}, {2, 0}, {1, 0}, {0, 0}}, */
+/*   {{11, 1}, {10, 1}, {9, 1}, {8, 1}, {7, 1}, {6, 1}, {5, 1}, {4, 1}, {3, 1}, {2, 1}, {1, 1}, {0, 1}}, */
+/*   {{11, 2}, {10, 2}, {9, 2}, {8, 2}, {7, 2}, {6, 2}, {5, 2}, {4, 2}, {3, 2}, {2, 2}, {1, 2}, {0, 2}}, */
+/*   {                          {8, 3}, {7, 3}, {6, 3}, {5, 3}, {4, 3}, {3, 3}                        } */
+/* }; */
+/* #endif */
 // clang-format on
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
